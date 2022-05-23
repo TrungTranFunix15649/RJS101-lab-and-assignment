@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { Card, CardHeader, CardBody, CardFooter } from "reactstrap";
 import { STAFFS } from "../shared/staffs";
 import { DEPARTMENTS } from "../shared/staffs";
-import dateFormat from "dateformat";
-const allStaff = document.getElementsByClassName(".allStaff");
+import dateFormat, { masks } from "dateformat";
 
 class Menu extends Component {
   constructor(props) {
