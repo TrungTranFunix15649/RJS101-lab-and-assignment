@@ -1,6 +1,8 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, { Component } from "react";
+import { Navbar, NavbarBrand } from "reactstrap";
+import Menu from "./components/StaffComponent";
+import "./App.css";
+import { STAFFS } from "./shared/staffs";
 function App() {
   return (
     <div className="App">
