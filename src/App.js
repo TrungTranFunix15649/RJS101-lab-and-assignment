@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Navbar, NavbarBrand } from "reactstrap";
+import { Navbar, NavbarBrand, NavItem, Dropdown } from "reactstrap";
 import Menu from "./components/StaffComponent";
 import "./App.css";
 import { STAFFS } from "./shared/staffs";
@@ -17,6 +17,14 @@ class App extends Component {
         <Navbar dark color="primary">
           <div className="container">
             <NavbarBrand href="/">Ứng Dụng Quản Lý Nhân Sự v1.0</NavbarBrand>
+            <NavItem className="App-header">
+              <a href="#">Trang Chủ</a>
+              <a href="#">Ứng dụng</a>
+              <a href="#">Liên hệ</a>
+              <Dropdown>
+                <a href="#">Dịch vụ khác</a>
+              </Dropdown>
+            </NavItem>
           </div>
         </Navbar>
         <Menu staffs={this.state.staffs} />
