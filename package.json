@@ -1,0 +1,24 @@
+{
+  "name": "git-test",
+  "version": "1.0.0",
+  "description": "This is a test folder to learn Git and Node",
+  "main": "index.html",
+  "scripts": {
+    "start": "npm run lite",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lite": "lite-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TrungTranFunix15649/RJS101-lab-and-assignment.git"
+  },
+  "author": "Doan Nhat Trung Tran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TrungTranFunix15649/RJS101-lab-and-assignment/issues"
+  },
+  "homepage": "https://github.com/TrungTranFunix15649/RJS101-lab-and-assignment#readme",
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  }
+}
