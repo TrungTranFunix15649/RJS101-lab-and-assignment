@@ -41,23 +41,27 @@ class DishDetail extends Component {
     }
     const cmnts = comments.map((comment) => {
       return (
-        <li key={comment.id}>
+        <div key={comment.id}>
           <p>{comment.comment}</p>
           <p>
             --{comment.author}, &nbsp;
             {new Intl.DateTimeFormat("en-us", {
               year: "numeric",
-              month: "long",
+              month: "short",
               day: "2-digit",
-            }).format(new Date(comment.date))}
+            }).format(new Date(Date.parse(comment.date)))}
           </p>
-        </li>
+        </div>
+        // <div class="container">
+        // </div>
       );
     });
     return (
       <div className="col-12 col-md-5 m-1">
-        <h4> Comments</h4>
-        <ul className="list-unstyled">{cmnts}</ul>
+        <Card>
+          <h4> Comments</h4>
+          <ul className="list-unstyled">{cmnts}</ul>
+        </Card>
       </div>
     );
   }
@@ -72,9 +76,11 @@ class DishDetail extends Component {
     const dishItem = this.renderDish(dish);
     const dishComment = this.renderComments(dish.comments);
     return (
-      <div className="row">
-        {dishItem}
-        {dishComment}
+      <div className="container">
+        <div className="row">
+          {dishItem}
+          {dishComment}
+        </div>
       </div>
     );
   }
