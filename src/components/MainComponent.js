@@ -32,6 +32,21 @@ class Main extends Component {
         />
       );
     };
+
+    const DishWithID = ({ match }) => {
+      return (
+        <DishDetail
+          dish={
+            this.state.dishes.filter(
+              (dish) => dish.id === parseInt(match.params.dishId, 10)
+            )[0]
+          }
+          comments={this.state.comments.filter(
+            (comment) => comment.dishId === parseInt(match.params.dishId, 10)
+          )}
+        />
+      );
+    };
     return (
       <div>
         <Header />
@@ -43,6 +58,7 @@ class Main extends Component {
             component={() => <Menu dishes={this.state.dishes} />}
             //onclick method is missing in this lab 05.2 router
           />
+          <Route path="/menu/:dishId" component={DishWithID} />
           <Route exact path="/contactus" component={Contact} />
           <Redirect to="/home" />
         </Switch>
