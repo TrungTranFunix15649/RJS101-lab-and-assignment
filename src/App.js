@@ -19,7 +19,7 @@ class App extends Component {
             <NavbarBrand href="/">Ứng Dụng Quản Lý Nhân Sự v1.0</NavbarBrand>
             <NavItem className="App-header">
               <a href="#">Trang Chủ</a>
-              <a href="#">Ứng dụng</a>
+              <a href="#">Danh Sách</a>
               <a href="#">Liên hệ</a>
               <Dropdown>
                 <a href="#">Dịch vụ khác</a>
