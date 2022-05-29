@@ -3,9 +3,9 @@ import {
   Card,
   CardImg,
   CardImgOverlay,
-  CardText,
-  CardBody,
   CardTitle,
+  CardBody,
+  CardText,
 } from "reactstrap";
 
 function RenderDish({ dish }) {
