@@ -12,26 +12,6 @@ import {
 import { Link } from "react-router-dom";
 import dateFormat from "dateformat";
 
-function RenderStaff({ staff }) {
-  return (
-    <div className="col-12 col-md-5 m-1">
-      <Card>
-        <CardImg top src={staff.image} alt={staff.name} />
-        <CardHeader>Họ và tên: {staff.name}</CardHeader>
-        <CardBody>
-          <div>Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyy")}</div>
-          <div>
-            Ngày vào công ty: {dateFormat(staff.startDate, "dd/mm/yyy")}
-          </div>
-          <div>Phòng ban: {staff.department.name}</div>
-          <div>Số ngày nghỉ còn lại: {staff.annualLeave}</div>
-          <div>Số ngày đã làm thêm: {staff.overTime}</div>
-        </CardBody>
-      </Card>
-    </div>
-  );
-}
-
 const StaffDetail = (props) => {
   if (props.staff != null) {
     return (
@@ -43,13 +23,30 @@ const StaffDetail = (props) => {
             </BreadcrumbItem>
             <BreadcrumbItem active>{props.staff.name}</BreadcrumbItem>
           </Breadcrumb>
-          <div className="col-12">
-            <h3>{props.staff.name}</h3>
-            <hr />
-          </div>
         </div>
         <div className="row">
-          <RenderStaff staff={props.staff} />
+          <div className="col-12 col-md-5 col-lg-4 mb-2">
+            <CardImg top src={props.staff.image} alt={props.staff.name} />
+          </div>
+          <div className="col-12 col-md-5 col-lg-8">
+            <Card>
+              <CardHeader>
+                <CardTitle>Họ và tên: {props.staff.name}</CardTitle>
+              </CardHeader>
+              <CardBody>
+                <div>
+                  Ngày sinh: {dateFormat(props.staff.doB, "dd/mm/yyyy")}
+                </div>
+                <div>
+                  Ngày vào công ty:{" "}
+                  {dateFormat(props.staff.startDate, "dd/mm/yyyy")}
+                </div>
+                <div>Phòng ban: {props.staff.department.name}</div>
+                <div>Số ngày nghỉ còn lại: {props.staff.annualLeave}</div>
+                <div>Số ngày đã làm thêm: {props.staff.overTime}</div>
+              </CardBody>
+            </Card>
+          </div>
         </div>
       </div>
     );

@@ -33,18 +33,18 @@ class Header extends Component {
                 src="assets/images/logo.png"
                 height="30"
                 width="41"
-                alt="Ristorante Con Fusion"
+                alt="Logo"
               />
             </NavbarBrand>
             <Collapse isOpen={this.state.isNavOpen} navbar>
               <Nav navbar>
                 <NavItem>
-                  <NavLink className="nav-link" to="/staff">
+                  <NavLink className="nav-link" to="/staffs">
                     <span className="fa fa-address-book fa-lg"></span>Nhân Viên
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink className="nav-link" to="/department">
+                  <NavLink className="nav-link" to="/departments">
                     <span className="fa fa-info fa-lg"></span>Phòng Ban
                   </NavLink>
                 </NavItem>

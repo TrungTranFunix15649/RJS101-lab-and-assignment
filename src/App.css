@@ -31,3 +31,9 @@ address {
 .navbar-dark {
   background-color: #512da8;
 }
+
+.message-input {
+  height: 10rem;
+  width: 100%;
+  text-align: c;
+}
