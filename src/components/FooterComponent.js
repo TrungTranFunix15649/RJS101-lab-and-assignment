@@ -9,34 +9,34 @@ function Footer(props) {
             <h5>Links</h5>
             <ul className="list-unstyled">
               <li>
-                <Link to="/home">Home</Link>
+                <Link to="/staffs">Nhân viên</Link>
               </li>
               <li>
-                <Link to="/aboutus">About Us</Link>
+                <Link to="/departments">Bộ phận</Link>
               </li>
               <li>
-                <Link to="/menu">Menu</Link>
+                <Link to="/payslip">Bảng Lương</Link>
               </li>
               <li>
-                <Link to="/contactus">Contact Us</Link>
+                <Link to="/contactus">Liên hệ</Link>
               </li>
             </ul>
           </div>
           <div className="col-7 col-sm-5">
-            <h5>Our Address</h5>
+            <h5>Địa chỉ</h5>
             <address>
-              121, Clear Water Bay Road
+              01, Đại Cồ Việt
               <br />
-              Clear Water Bay, Kowloon
+              Phường Bách Khoa, Q. Hai Bà Trưng
               <br />
-              HONG KONG
+              Hà Nội, Việt Nam
               <br />
-              <i className="fa fa-phone fa-lg"></i>: +852 1234 5678
+              <i className="fa fa-phone fa-lg"></i>: +841 2345 6789
               <br />
-              <i className="fa fa-fax fa-lg"></i>: +852 8765 4321
+              <i className="fa fa-fax fa-lg"></i>: +841 2345 6789
               <br />
               <i className="fa fa-envelope fa-lg"></i>:{" "}
-              <a href="mailto:confusion@food.net">confusion@food.net</a>
+              <a href="mailto:confusion@food.net">staffmanagement@org.vn</a>
             </address>
           </div>
           <div className="col-12 col-sm-4 align-self-center">
@@ -79,7 +79,7 @@ function Footer(props) {
         </div>
         <div className="row justify-content-center">
           <div className="col-auto">
-            <p>© Copyright 2018 Ristorante Con Fusion</p>
+            <p>© Copyright 2022 FUNIX EDU ASSIGNMENT 2</p>
           </div>
         </div>
       </div>

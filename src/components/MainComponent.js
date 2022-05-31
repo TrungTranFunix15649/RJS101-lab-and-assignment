@@ -1,50 +1,34 @@
 import React, { Component } from "react";
-import Home from "./HomeComponent";
-import Menu from "./MenuComponent";
+
+import StaffList from "./StaffComponent";
 import Contact from "./ContactComponent";
-import DishDetail from "./DishdetailComponent";
+import StaffDetail from "./StaffdetailComponent";
 import About from "./AboutComponent";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
-import { DISHES } from "../shared/dishes";
-import { COMMENTS } from "../shared/comments";
-import { LEADERS } from "../shared/leaders";
-import { PROMOTIONS } from "../shared/promotions";
+import { STAFFS } from "../shared/staffs";
+import { DEPARTMENTS } from "../shared/staffs";
+import { ROLE } from "../shared/staffs";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dishes: DISHES,
-      comments: COMMENTS,
-      promotions: PROMOTIONS,
-      leaders: LEADERS,
+      staffs: STAFFS,
+      departments: DEPARTMENTS,
     };
   }
 
   render() {
-    const HomePage = () => {
+    const StaffWithID = ({ match }) => {
       return (
-        <Home
-          dish={this.state.dishes.filter((dish) => dish.featured)[0]}
-          promotion={this.state.promotions.filter((promo) => promo.featured)[0]}
-          leader={this.state.leaders.filter((leader) => leader.featured)[0]}
-        />
-      );
-    };
-
-    const DishWithID = ({ match }) => {
-      return (
-        <DishDetail
-          dish={
-            this.state.dishes.filter(
-              (dish) => dish.id === parseInt(match.params.dishId, 10)
+        <StaffDetail
+          staff={
+            this.state.staffs.filter(
+              (staff) => staff.id === parseInt(match.params.id, 10)
             )[0]
           }
-          comments={this.state.comments.filter(
-            (comment) => comment.dishId === parseInt(match.params.dishId, 10)
-          )}
         />
       );
     };
@@ -52,21 +36,20 @@ class Main extends Component {
       <div>
         <Header />
         <Switch>
-          <Route path="/Home" component={HomePage} />
           <Route
             exact
-            path="/menu"
-            component={() => <Menu dishes={this.state.dishes} />}
-            //onclick method is missing in this lab 05.2 router
+            path="/staffs"
+            component={() => <StaffList staffs={this.state.staffs} />}
           />
-          <Route path="/menu/:dishId" component={DishWithID} />
-          <Route exact path="/contactus" component={Contact} />
+          <Route path="/staffs/:id" component={StaffWithID} />
+          {/* <Route exact path="/departments" component={departments} />
+          <Route exact path="/payslip" component={Payslip} /> */}
           <Route
             exact
-            path="/aboutus"
-            component={() => <About leaders={this.state.leaders} />}
+            path="/contactus"
+            component={() => <Contact leaders={this.state.leaders} />}
           />
-          <Redirect to="/home" />
+          <Redirect to="/staffs" />
         </Switch>
 
         <Footer />

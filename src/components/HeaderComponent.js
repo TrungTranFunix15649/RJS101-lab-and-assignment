@@ -39,43 +39,29 @@ class Header extends Component {
             <Collapse isOpen={this.state.isNavOpen} navbar>
               <Nav navbar>
                 <NavItem>
-                  <NavLink className="nav-link" to="/home">
-                    <span className="fa fa-home fa-lg"></span>Home
+                  <NavLink className="nav-link" to="/staff">
+                    <span className="fa fa-address-book fa-lg"></span>Nhân Viên
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink className="nav-link" to="/aboutus">
-                    <span className="fa fa-info fa-lg"></span>About Us
+                  <NavLink className="nav-link" to="/department">
+                    <span className="fa fa-info fa-lg"></span>Phòng Ban
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink className="nav-link" to="/menu">
-                    <span className="fa fa-list fa-lg"></span>Menu
+                  <NavLink className="nav-link" to="/payslip">
+                    <span className="fa fa-list fa-lg"></span>Bảng Lương
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink className="nav-link" to="/contactus">
-                    <span className="fa fa-address-card fa-lg"></span>Contact Us
+                    <span className="fa fa-address-card fa-lg"></span>Liên Hệ
                   </NavLink>
                 </NavItem>
               </Nav>
             </Collapse>
           </div>
         </Navbar>
-        <Jumbotron>
-          <div className="container">
-            <div className="row row-header">
-              <div className="col-12 col-sm-6">
-                <h1>Ristorante Con Fusion</h1>
-                <p>
-                  We take inspiration from the World's best cuisines, and create
-                  a unique fusion experience. Our lipsmacking creation will
-                  tickle your culinary senses!
-                </p>
-              </div>
-            </div>
-          </div>
-        </Jumbotron>
       </React.Fragment>
     );
   }
