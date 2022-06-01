@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import StaffList from "./StaffComponent";
 import Contact from "./ContactComponent";
 import StaffDetail from "./StaffdetailComponent";
-import About from "./AboutComponent";
+import DeptList from "./DeptComponent";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
 import { STAFFS } from "../shared/staffs";
@@ -42,14 +42,19 @@ class Main extends Component {
             component={() => <StaffList staffs={this.state.staffs} />}
           />
           <Route path="/staffs/:id" component={StaffWithID} />
-          {/* <Route exact path="/departments" component={departments} />
-          <Route exact path="/payslip" component={Payslip} /> */}
+
+          <Route
+            exact
+            path="/departments"
+            component={() => <DeptList depts={this.state.departments} />}
+          />
+
           <Route
             exact
             path="/contactus"
             component={() => <Contact leaders={this.state.leaders} />}
           />
-          <Redirect to="/staffs" />
+          {/* <Redirect to="/staffs" /> */}
         </Switch>
 
         <Footer />

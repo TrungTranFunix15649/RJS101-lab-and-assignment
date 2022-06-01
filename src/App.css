@@ -37,3 +37,13 @@ address {
   width: 100%;
   text-align: c;
 }
+
+.search {
+  margin: 5px;
+  padding-left: 5px;
+  font-weight: bold;
+}
+
+.search input {
+  margin: 5px;
+}
