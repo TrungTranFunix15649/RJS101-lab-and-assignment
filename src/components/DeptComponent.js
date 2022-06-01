@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardText,
   CardTitle,
-  Media,
 } from "reactstrap";
 
 function DeptList(props) {

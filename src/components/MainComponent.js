@@ -6,6 +6,7 @@ import StaffDetail from "./StaffdetailComponent";
 import DeptList from "./DeptComponent";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
+import Payslip from "./PayslipComponent";
 import { STAFFS } from "../shared/staffs";
 import { DEPARTMENTS } from "../shared/staffs";
 import { ROLE } from "../shared/staffs";
@@ -42,7 +43,10 @@ class Main extends Component {
             component={() => <StaffList staffs={this.state.staffs} />}
           />
           <Route path="/staffs/:id" component={StaffWithID} />
-
+          <Route
+            path="/payslip"
+            component={() => <Payslip staffs={this.state.staffs} />}
+          />
           <Route
             exact
             path="/departments"
@@ -54,7 +58,7 @@ class Main extends Component {
             path="/contactus"
             component={() => <Contact leaders={this.state.leaders} />}
           />
-          {/* <Redirect to="/staffs" /> */}
+          <Redirect to="/staffs" />
         </Switch>
 
         <Footer />
