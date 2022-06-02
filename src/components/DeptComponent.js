@@ -12,8 +12,8 @@ import {
 function DeptList(props) {
   const deptlist = props.depts.map((dept) => {
     return (
-      <div className="col-12 col-md-5 col-lg-4 mb-3 mt-3">
-        <Card key={dept.id}>
+      <div key={dept.id} className="col-12 col-md-5 col-lg-4 mb-3 mt-3">
+        <Card>
           <CardTitle>
             <CardHeader>{dept.name}</CardHeader>
           </CardTitle>

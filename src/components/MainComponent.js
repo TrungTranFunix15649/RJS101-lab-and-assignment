@@ -9,7 +9,7 @@ import Footer from "./FooterComponent";
 import Payslip from "./PayslipComponent";
 import { STAFFS } from "../shared/staffs";
 import { DEPARTMENTS } from "../shared/staffs";
-import { ROLE } from "../shared/staffs";
+
 import { Switch, Route, Redirect } from "react-router-dom";
 
 class Main extends Component {
@@ -33,6 +33,7 @@ class Main extends Component {
         />
       );
     };
+
     return (
       <div>
         <Header />
@@ -43,6 +44,7 @@ class Main extends Component {
             component={() => <StaffList staffs={this.state.staffs} />}
           />
           <Route path="/staffs/:id" component={StaffWithID} />
+
           <Route
             path="/payslip"
             component={() => <Payslip staffs={this.state.staffs} />}

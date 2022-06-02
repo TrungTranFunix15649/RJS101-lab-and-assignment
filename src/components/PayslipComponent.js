@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 function Payslip(props) {
   const payslip = props.staffs.map((staff) => {
     return (
-      <div className="col-12 col-md-2 col-lg-4 mb-2">
+      <div key={staff.id} className="col-12 col-md-5 col-lg-4 mb-2">
         <Card>
           <CardTitle>{staff.name}</CardTitle>
           <CardBody>
