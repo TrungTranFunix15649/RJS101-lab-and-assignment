@@ -28,11 +28,6 @@ function DeptList(props) {
     <div className="container">
       <div className="row">
         <h2>Danh Sách Phòng Ban</h2>
-        <div className="search ml-auto mr-3">
-          <label>Tìm kiếm: </label>
-          <input type="text" placeholder="Phòng ban"></input>
-          <span className="fa fa-search fa-lg"></span>
-        </div>
       </div>
       <div className="row">{deptlist}</div>
     </div>
