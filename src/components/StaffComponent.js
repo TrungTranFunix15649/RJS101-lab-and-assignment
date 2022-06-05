@@ -21,6 +21,7 @@ class StaffList extends Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.searchName = React.createRef();
+    this.handleAdd = this.handleAdd.bind(this);
   }
 
   handleSubmit(event) {
@@ -33,6 +34,9 @@ class StaffList extends Component {
     console.log(filteredStaff);
 
     this.setState({ staffs: filteredStaff });
+  }
+  handleAdd() {
+    console.log("Added");
   }
 
   RenderStaffs(staff) {
@@ -49,11 +53,21 @@ class StaffList extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-12 col-md-5 col-lg-4">
+          <div className="col-xs-10 col-md-5 col-lg-4">
             <h3>NHÂN VIÊN</h3>
             <hr />
           </div>
-          <form onSubmit={this.handleSubmit} className="ml-auto mr-3 search ">
+          <div className="col-xs-2 col-md-1 col-lg-1">
+            <button
+              onClick={this.handleAdd}
+              className="fa fa-plus fa-lg btn-secondary btn-lg btn-block"
+            ></button>
+            <hr />
+          </div>
+          <form
+            onSubmit={this.handleSubmit}
+            className="  col-12 col-md-6 col-lg-7 float-right"
+          >
             <label htmlFor="search">Tìm nhân viên</label>
             <input
               type="text"
@@ -68,6 +82,7 @@ class StaffList extends Component {
               className="fa fa-search fa-lg"
             ></input>
           </form>
+          <hr />
         </div>
         <div className="row">
           {this.state.staffs.map((staff) => {

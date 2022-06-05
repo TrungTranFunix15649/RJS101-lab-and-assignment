@@ -39,9 +39,8 @@ address {
 }
 
 .search {
-  margin: 5px;
-  padding-left: 5px;
   font-weight: bold;
+  align-items: center;
 }
 
 .search input {
