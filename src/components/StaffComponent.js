@@ -7,29 +7,33 @@ import {
   CardText,
   CardBody,
   CardTitle,
-  Breadcrumb,
-  BreadcrumbItem,
 } from "reactstrap";
 import { Link } from "react-router-dom";
-
+import StaffDetail from "./StaffdetailComponent";
+let search = "";
 class StaffList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       searchedStaff: "",
+      staffs: props.staffs,
+      ListForSearch: props.staffs,
     };
-    this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.searchName = React.createRef();
   }
 
-  handleChange(event) {
-    this.setState({ searchedStaff: event.target.value });
+  handleSubmit(event) {
     event.preventDefault();
-  }
+    let filteredStaff = this.state.ListForSearch.filter((staff) => {
+      return staff.name
+        .toLowerCase()
+        .includes(this.searchName.current.value.toLowerCase());
+    });
+    console.log(filteredStaff);
 
-  // handleSubmit(event) {
-  //   event.preventDefault();
-  // }
+    this.setState({ staffs: filteredStaff });
+  }
 
   RenderStaffs(staff) {
     return (
@@ -42,21 +46,6 @@ class StaffList extends Component {
     );
   }
   render() {
-    let filteredStaff = this.props.staffs.filter((staff) => {
-      return (
-        staff.name
-          .toLowerCase()
-          .indexOf(this.state.searchedStaff.toLowerCase()) !== -1
-      );
-    });
-
-    const stafflist = filteredStaff.map((staff) => {
-      return (
-        <div key={staff.id} className="col-12 col-md-4 col-lg-2 mb-2 ">
-          {this.RenderStaffs(staff)}
-        </div>
-      );
-    });
     return (
       <div className="container">
         <div className="row">
@@ -64,13 +53,31 @@ class StaffList extends Component {
             <h3>NHÂN VIÊN</h3>
             <hr />
           </div>
-          <form onChange={this.handleChange} className="ml-auto mr-3 search ">
-            <label>Tìm nhân viên</label>
-            <input type="text" placeholder="Nhập tên"></input>
-            <span className="fa fa-search fa-lg"></span>
+          <form onSubmit={this.handleSubmit} className="ml-auto mr-3 search ">
+            <label htmlFor="search">Tìm nhân viên</label>
+            <input
+              type="text"
+              placeholder="Nhập tên"
+              defaultValue=""
+              ref={this.searchName}
+            ></input>
+            <input
+              type="submit"
+              value="Tìm"
+              name="submit"
+              className="fa fa-search fa-lg"
+            ></input>
           </form>
         </div>
-        <div className="row">{stafflist}</div>
+        <div className="row">
+          {this.state.staffs.map((staff) => {
+            return (
+              <div key={staff.id} className="col-12 col-md-4 col-lg-2 mb-2 ">
+                {this.RenderStaffs(staff)}
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
