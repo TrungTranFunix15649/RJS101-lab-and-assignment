@@ -29,14 +29,15 @@ class StaffList extends Component {
       salaryscale: "",
       startdate: "",
       department: "",
-      annualleave: "",
-      overtime: "",
+      annualleave: 0,
+      overtime: 0,
 
       isAddOpen: false,
       touched: {
         staffname: false,
         dob: false,
         startdate: false,
+        salaryscale: false,
       },
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -77,8 +78,8 @@ class StaffList extends Component {
       salaryScale: "",
       startDate: "",
       department: "",
-      annualLeave: "",
-      overTime: "",
+      annualLeave: 0,
+      overTime: 0,
 
       image: "/assets/images/alberto.png",
     };
@@ -92,11 +93,13 @@ class StaffList extends Component {
     newStaff.department = this.state.department;
     newStaff.annualLeave = this.state.annualleave;
     newStaff.overTime = this.state.overtime;
-    console.log(newStaff);
-    this.setState({ ListForSearch: this.state.ListForSearch.push(newStaff) });
-    console.log(this.state.ListForSearch);
-
-    this.handleAdd();
+    if (!Object.values(this.state.touched).includes(false)) {
+      this.setState({ ListForSearch: this.state.ListForSearch.push(newStaff) });
+      console.log(newStaff);
+      this.handleAdd();
+    } else {
+      alert("Yêu cầu nhập đầy đủ dữ liệu");
+    }
     event.preventDefault();
   }
   // thêm nhân viên -Mở thẻ để nhập thông tin của nhân viên mới
@@ -120,13 +123,14 @@ class StaffList extends Component {
     });
   };
   // Xác minh thông tin nhân viên mới được nhập vào có hợp lệ không
-  validate(staffname, dob, startdate) {
+  validate(staffname, dob, startdate, salaryscale) {
     const errors = {
       staffname: "",
       dob: "",
       startdate: "",
+      salaryscale: "",
     };
-    // Trường tên không được để trống, phải nhiều hơn 2 kí tự và ít hơn 30 kí tựf
+    // Trường tên không được để trống, phải nhiều hơn 2 kí tự và ít hơn 30 kí tự
     if (this.state.touched.staffname & (staffname.length === 0))
       errors.staffname = "Yêu cầu nhập";
     else if (this.state.touched.staffname & (staffname.length < 3))
@@ -138,6 +142,8 @@ class StaffList extends Component {
       errors.dob = "Yêu cầu nhập";
     if (this.state.touched.startdate & (startdate.length === 0))
       errors.startdate = "Yêu cầu nhập";
+    if (this.state.touched.salaryscale & (salaryscale.length === 0))
+      errors.salaryscale = "Yêu cầu nhập 1.0 - 3.0";
 
     return errors;
   }
@@ -145,44 +151,86 @@ class StaffList extends Component {
     const errors = this.validate(
       this.state.staffname,
       this.state.dob,
-      this.state.startdate
+      this.state.startdate,
+      this.state.salaryscale
     );
     return (
       <div className="container">
         <div className="row">
-          <div className="col-xs-10 col-md-5 col-lg-4">
+          <div className="col-sm-9 col-md-4 col-lg-4 mt-2">
             <h3>NHÂN VIÊN</h3>
-            <hr />
           </div>
-          <div className="col-xs-2 col-md-1 col-lg-1">
-            <Button outline onClick={this.handleAdd}>
-              <span className="fa fa-plus fa-lg "></span>
-            </Button>
-            <hr />
+          <button
+            outline
+            onClick={this.handleAdd}
+            className="fa fa-plus fa-lg col-sm-2 col-md-2 col-lg-1 mt-2"
+            color="secondary"
+          ></button>
+
+          <div className="col-sm-12 col-md-6 col-lg-7 mt-2">
+            <form onSubmit={this.handleSubmit}>
+              <input
+                type="text"
+                placeholder="Nhập tên"
+                defaultValue=""
+                ref={this.searchName}
+                className="col-sm-9 col-md-8"
+              ></input>
+              <button
+                type="submit"
+                value="Tìm"
+                name="submit"
+                className="col-2 pl-2 primary"
+                color="primary"
+              >
+                Tìm
+              </button>
+            </form>
           </div>
-          <form
-            onSubmit={this.handleSubmit}
-            className="  col-12 col-md-6 col-lg-7 float-right"
-          >
-            <input
-              type="text"
-              placeholder="Nhập tên"
-              defaultValue=""
-              ref={this.searchName}
-            ></input>
-            <input
-              type="submit"
-              value="Tìm"
-              name="submit"
-              className="fa fa-search fa-lg"
-            ></input>
-          </form>
-          <hr />
         </div>
+        {/* <Form>
+          <FormGroup row>
+            <Col sm={9} md={4} lg={4} className="mt-2">
+              <h3>NHÂN VIÊN</h3>
+            </Col>
+            <Col sm={2} md={2} lg={1} className="mt-2">
+              <Button
+                type="submit"
+                className="fa fa-plus fa-lg "
+                onSubmit={this.handleAdd}
+              ></Button>
+            </Col>
+            <Col sm={12} md={6} lg={7} className="mt-2">
+              <FormGroup row>
+                <Col sm={9} md={8}>
+                  <Input
+                    onSubmit={this.handleSubmit}
+                    type="text"
+                    placeholder="Nhập tên"
+                    defaultValue=""
+                    ref={this.searchName}
+                  />
+                </Col>
+                <Col sm={1} md={2}>
+                  <Button
+                    type="submit"
+                    value="Tìm"
+                    name="submit"
+                    className="fa fa-search fa-lg "
+                    color="primary"
+                  >
+                    Tìm
+                  </Button>
+                </Col>
+              </FormGroup>
+            </Col>
+          </FormGroup>
+        </Form> */}
+        <hr />
         <div className="row">
           {this.state.staffs.map((staff) => {
             return (
-              <div key={staff.id} className="col-12 col-md-4 col-lg-2 mb-2 ">
+              <div key={staff.id} className="col-sm-6 col-md-4 col-lg-2 mb-2 ">
                 {this.RenderStaffs(staff)}
               </div>
             );
@@ -261,11 +309,12 @@ class StaffList extends Component {
                       value={this.state.department}
                       onChange={this.handleInputChange}
                     >
-                      <option>Finance</option>
-                      <option>HR</option>
-                      <option>IT</option>
-                      <option>Marketing</option>
-                      <option>Sale</option>
+                      <option defaultValue value=""></option>
+                      <option value="Finance">Finance</option>
+                      <option value="HR">HR</option>
+                      <option value="IT">IT</option>
+                      <option value="Marketing">Marketing</option>
+                      <option value="Sale">Sale</option>
                     </Input>
                   </Col>
                 </FormGroup>
@@ -283,8 +332,12 @@ class StaffList extends Component {
                       precision={1}
                       max={3.0}
                       value={this.state.salaryscale}
+                      valid={errors.salaryscale === ""}
+                      invalid={errors.salaryscale !== ""}
+                      onBlur={this.handleBlur("salaryscale")}
                       onChange={this.handleInputChange}
                     />
+                    <FormFeedback>{errors.salaryscale}</FormFeedback>
                   </Col>
                 </FormGroup>
                 <FormGroup row>

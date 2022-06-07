@@ -25,10 +25,10 @@ const StaffDetail = (props) => {
           </Breadcrumb>
         </div>
         <div className="row">
-          <div className="col-12 col-md-5 col-lg-4 mb-2">
+          <div className="col-sm-6 col-md-5 col-lg-4 mb-2">
             <CardImg top src={props.staff.image} alt={props.staff.name} />
           </div>
-          <div className="col-12 col-md-5 col-lg-8">
+          <div className="col-sm-6 col-md-5 col-lg-8">
             <Card>
               <CardHeader>
                 <CardTitle>Họ và tên: {props.staff.name}</CardTitle>
