@@ -13,6 +13,7 @@ import {
   Label,
   Col,
   Input,
+  FormFeedback,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
@@ -30,16 +31,24 @@ class StaffList extends Component {
       department: "",
       annualleave: "",
       overtime: "",
-      salary: "",
+
       isAddOpen: false,
+      touched: {
+        staffname: false,
+        dob: false,
+        startdate: false,
+      },
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.searchName = React.createRef();
     this.handleAdd = this.handleAdd.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleNewStaff = this.handleNewStaff.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+    this.validate = this.validate.bind(this);
   }
 
+  // Chức năng tìm kiếm tên nhân viên khi nhập tên và nhấn submit
   handleSubmit(event) {
     event.preventDefault();
     let filteredStaff = this.state.ListForSearch.filter((staff) => {
@@ -51,7 +60,7 @@ class StaffList extends Component {
 
     this.setState({ staffs: filteredStaff });
   }
-
+  // Cập nhật thay đổi trạng thái khi nhập thông tin nhân viên mới
   handleInputChange(event) {
     const value = event.target.value;
     const name = event.target.name;
@@ -59,16 +68,42 @@ class StaffList extends Component {
       [name]: value,
     });
   }
+  // Lấy thông tin nhân viên đã nhập để đưa vào danh sách nhân viên cần in ra màn hình
   handleNewStaff(event) {
-    console.log("This state: " + JSON.stringify(this.state));
-    alert("This state: " + JSON.stringify(this.state));
+    const newStaff = {
+      id: "",
+      name: "",
+      doB: "",
+      salaryScale: "",
+      startDate: "",
+      department: "",
+      annualLeave: "",
+      overTime: "",
+
+      image: "/assets/images/alberto.png",
+    };
+    newStaff.id =
+      this.state.ListForSearch[this.state.ListForSearch.length - 1].id + 1;
+
+    newStaff.name = this.state.staffname;
+    newStaff.doB = this.state.dob;
+    newStaff.salaryScale = this.state.salaryscale;
+    newStaff.startDate = this.state.startdate;
+    newStaff.department = this.state.department;
+    newStaff.annualLeave = this.state.annualleave;
+    newStaff.overTime = this.state.overtime;
+    console.log(newStaff);
+    this.setState({ ListForSearch: this.state.ListForSearch.push(newStaff) });
+    console.log(this.state.ListForSearch);
+
     this.handleAdd();
     event.preventDefault();
   }
+  // thêm nhân viên -Mở thẻ để nhập thông tin của nhân viên mới
   handleAdd() {
     this.setState({ isAddOpen: !this.state.isAddOpen });
   }
-
+  // In thẻ thông tin của nhân viên ra màn hình trang
   RenderStaffs(staff) {
     return (
       <Card>
@@ -79,7 +114,39 @@ class StaffList extends Component {
       </Card>
     );
   }
+  handleBlur = (field) => (evt) => {
+    this.setState({
+      touched: { ...this.state.touched, [field]: true },
+    });
+  };
+  // Xác minh thông tin nhân viên mới được nhập vào có hợp lệ không
+  validate(staffname, dob, startdate) {
+    const errors = {
+      staffname: "",
+      dob: "",
+      startdate: "",
+    };
+    // Trường tên không được để trống, phải nhiều hơn 2 kí tự và ít hơn 30 kí tựf
+    if (this.state.touched.staffname & (staffname.length === 0))
+      errors.staffname = "Yêu cầu nhập";
+    else if (this.state.touched.staffname & (staffname.length < 3))
+      errors.staffname = "Yêu cầu nhiều hơn 2 kí tự";
+    else if (this.state.touched.staffname & (staffname.length > 30))
+      errors.staffname = "Yêu cầu ít hơn 30 kí tự";
+
+    if (this.state.touched.dob & (dob.length === 0))
+      errors.dob = "Yêu cầu nhập";
+    if (this.state.touched.startdate & (startdate.length === 0))
+      errors.startdate = "Yêu cầu nhập";
+
+    return errors;
+  }
   render() {
+    const errors = this.validate(
+      this.state.staffname,
+      this.state.dob,
+      this.state.startdate
+    );
     return (
       <div className="container">
         <div className="row">
@@ -137,8 +204,12 @@ class StaffList extends Component {
                       name="staffname"
                       placeholder="Họ và tên"
                       value={this.state.staffname}
+                      valid={errors.staffname === ""}
+                      invalid={errors.staffname !== ""}
+                      onBlur={this.handleBlur("staffname")}
                       onChange={this.handleInputChange}
                     />
+                    <FormFeedback>{errors.staffname}</FormFeedback>
                   </Col>
                 </FormGroup>
                 <FormGroup row>
@@ -152,8 +223,12 @@ class StaffList extends Component {
                       name="dob"
                       placeholder="dd/mm/yyyy"
                       value={this.state.dob}
+                      valid={errors.dob === ""}
+                      invalid={errors.dob !== ""}
+                      onBlur={this.handleBlur("dob")}
                       onChange={this.handleInputChange}
                     />
+                    <FormFeedback>{errors.dob}</FormFeedback>
                   </Col>
                 </FormGroup>
                 <FormGroup row>
@@ -167,8 +242,12 @@ class StaffList extends Component {
                       name="startdate"
                       placeholder="dd/mm/yyyy"
                       value={this.state.startdate}
+                      valid={errors.startdate === ""}
+                      invalid={errors.startdate !== ""}
+                      onBlur={this.handleBlur("startdate")}
                       onChange={this.handleInputChange}
                     />
+                    <FormFeedback>{errors.startdate}</FormFeedback>
                   </Col>
                 </FormGroup>
                 <FormGroup row>
