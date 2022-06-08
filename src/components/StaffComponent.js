@@ -52,15 +52,16 @@ class StaffList extends Component {
 
   // Chức năng tìm kiếm tên nhân viên khi nhập tên và nhấn Tìm
   handleSubmit(event) {
-    // let filteredStaff = this.state.ListForSearch.filter((staff) => {
-    //   return staff.name
-    //     .toLowerCase()
-    //     .includes(this.searchName.value.toLowerCase());
-    // });
+    event.preventDefault();
+    console.log(this.state.ListForSearch);
+    let filteredStaff = this.state.ListForSearch.filter((staff) => {
+      return staff.name
+        .toLowerCase()
+        .includes(this.searchName.value.toLowerCase());
+    });
     console.log(this.searchName.value);
     console.log(this.state.ListForSearch);
-    // this.setState({ staffs: filteredStaff });
-    event.preventDefault();
+    this.setState({ staffs: filteredStaff });
   }
   // Cập nhật thay đổi trạng thái khi nhập thông tin nhân viên mới
   handleInputChange(event) {
@@ -83,7 +84,8 @@ class StaffList extends Component {
       overTime: 0,
       image: "/assets/images/alberto.png",
     };
-    newStaff.id = this.state.ListForSearch.lenght + 1;
+    newStaff.id =
+      this.state.ListForSearch[this.state.ListForSearch.length - 1].id + 1;
 
     newStaff.name = this.state.staffname;
     newStaff.doB = this.state.dob;
@@ -96,8 +98,7 @@ class StaffList extends Component {
       console.log(newStaff);
       console.log(this.state.ListForSearch);
       this.setState({
-        ListForSearch: [...this.state.ListForSearch, newStaff],
-        staffs: [...this.state.staffs, newStaff],
+        ListForSearch: this.state.ListForSearch.push(newStaff),
       });
       this.handleAdd();
     } else {
