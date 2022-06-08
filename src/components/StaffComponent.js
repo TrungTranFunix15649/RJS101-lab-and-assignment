@@ -23,9 +23,9 @@ const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len;
 const minLength = (len) => (val) => val && val.length >= len;
 
-const maxVal = (maxvalue) => (val) => val > maxvalue;
-const minVal = (minvalue) => (val) => val < minvalue;
-const intNum = (val) => Number.isInteger(val);
+const maxVal = (maxvalue) => (val) => !val || Number(val) < maxvalue;
+const minVal = (minvalue) => (val) => val && Number(val) >= minvalue;
+const intNum = (val) => val >= 0 && Number.isInteger(val / 0.5);
 class StaffList extends Component {
   constructor(props) {
     super(props);
@@ -230,11 +230,11 @@ class StaffList extends Component {
                       }}
                     />
                     <Errors
-                      classname="text-danger"
+                      className="text-danger"
                       model=".staffname"
                       show="touched"
-                      message={{
-                        required: "Yêu cầu nhập",
+                      messages={{
+                        required: "Yêu cầu nhập. ",
                         minLength: "Tên phải nhiều hơn 2 kí tự",
                         maxLength: "Tên phải ít hơn 30 kí tự",
                       }}
@@ -256,11 +256,11 @@ class StaffList extends Component {
                       validators={{ required }}
                     />
                     <Errors
-                      classname="text-danger"
+                      className="text-danger"
                       model=".dob"
                       show="touched"
-                      message={{
-                        required: "Yêu cầu nhập",
+                      messages={{
+                        required: "Yêu cầu nhập. ",
                       }}
                     />
                   </Col>
@@ -280,11 +280,11 @@ class StaffList extends Component {
                       validators={{ required }}
                     />
                     <Errors
-                      classname="text-danger"
+                      className="text-danger"
                       model=".startdate"
                       show="touched"
-                      message={{
-                        required: "Yêu cầu nhập",
+                      messages={{
+                        required: "Yêu cầu nhập. ",
                       }}
                     />
                   </Col>
@@ -308,11 +308,11 @@ class StaffList extends Component {
                       <option value="Sale">Sale</option>
                     </Control.select>
                     <Errors
-                      classname="text-danger"
-                      model=".deparment"
+                      className="text-danger"
+                      model=".department"
                       show="touched"
-                      message={{
-                        required: "Yêu cầu nhập",
+                      messages={{
+                        required: "Yêu cầu chọn phòng ban.",
                       }}
                     />
                   </Col>
@@ -332,6 +332,21 @@ class StaffList extends Component {
                       precision={1}
                       max={3.0}
                       className="form-control"
+                      validators={{
+                        required,
+                        minVal: minVal(1.0),
+                        maxVal: maxVal(3.0),
+                      }}
+                    />
+                    <Errors
+                      className="text-danger"
+                      model=".salaryscale"
+                      show="touched"
+                      messages={{
+                        required: "Yêu cầu nhập. ",
+                        minVal: "Hệ số >= 1.0. ",
+                        maxVal: "Hệ số <= 3.0",
+                      }}
                     />
                   </Col>
                 </Row>
@@ -349,6 +364,15 @@ class StaffList extends Component {
                       step={0.5}
                       precision={1}
                       className="form-control"
+                      validators={{ intNum }}
+                    />
+                    <Errors
+                      className="text-danger"
+                      model=".annualleave"
+                      show="touched"
+                      messages={{
+                        intNum: "Nhập số nguyên hoặc lẻ 0.5 ngày.",
+                      }}
                     />
                   </Col>
                 </Row>
