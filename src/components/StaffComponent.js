@@ -14,6 +14,7 @@ import {
   Col,
   Input,
   FormFeedback,
+  Row,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
@@ -49,16 +50,17 @@ class StaffList extends Component {
     this.validate = this.validate.bind(this);
   }
 
-  // Chức năng tìm kiếm tên nhân viên khi nhập tên và nhấn submit
+  // Chức năng tìm kiếm tên nhân viên khi nhập tên và nhấn Tìm
   handleSubmit(event) {
     event.preventDefault();
+    console.log(this.state.ListForSearch);
     let filteredStaff = this.state.ListForSearch.filter((staff) => {
       return staff.name
         .toLowerCase()
-        .includes(this.searchName.current.value.toLowerCase());
+        .includes(this.searchName.value.toLowerCase());
     });
-    console.log(filteredStaff);
-
+    console.log(this.searchName.value);
+    console.log(this.state.ListForSearch);
     this.setState({ staffs: filteredStaff });
   }
   // Cập nhật thay đổi trạng thái khi nhập thông tin nhân viên mới
@@ -80,7 +82,6 @@ class StaffList extends Component {
       department: "",
       annualLeave: 0,
       overTime: 0,
-
       image: "/assets/images/alberto.png",
     };
     newStaff.id =
@@ -94,12 +95,16 @@ class StaffList extends Component {
     newStaff.annualLeave = this.state.annualleave;
     newStaff.overTime = this.state.overtime;
     if (!Object.values(this.state.touched).includes(false)) {
-      this.setState({ ListForSearch: this.state.ListForSearch.push(newStaff) });
       console.log(newStaff);
+      console.log(this.state.ListForSearch);
+      this.setState({
+        ListForSearch: this.state.ListForSearch.push(newStaff),
+      });
       this.handleAdd();
     } else {
       alert("Yêu cầu nhập đầy đủ dữ liệu");
     }
+    console.log(this.state.ListForSearch);
     event.preventDefault();
   }
   // thêm nhân viên -Mở thẻ để nhập thông tin của nhân viên mới
@@ -156,65 +161,30 @@ class StaffList extends Component {
     );
     return (
       <div className="container">
-        <div className="row">
-          <div className="col-sm-9 col-md-4 col-lg-4 mt-2">
+        <Row>
+          <Col sm={10} md={4} className="mt-2">
             <h3>NHÂN VIÊN</h3>
-          </div>
-          <button
-            outline
-            onClick={this.handleAdd}
-            className="fa fa-plus fa-lg col-sm-2 col-md-2 col-lg-1 mt-2"
-            color="secondary"
-          ></button>
+          </Col>
 
-          <div className="col-sm-12 col-md-6 col-lg-7 mt-2">
-            <form onSubmit={this.handleSubmit}>
-              <input
-                type="text"
-                placeholder="Nhập tên"
-                defaultValue=""
-                ref={this.searchName}
-                className="col-sm-9 col-md-8"
-              ></input>
-              <button
-                type="submit"
-                value="Tìm"
-                name="submit"
-                className="col-2 pl-2 primary"
-                color="primary"
-              >
-                Tìm
-              </button>
-            </form>
-          </div>
-        </div>
-        {/* <Form>
-          <FormGroup row>
-            <Col sm={9} md={4} lg={4} className="mt-2">
-              <h3>NHÂN VIÊN</h3>
-            </Col>
-            <Col sm={2} md={2} lg={1} className="mt-2">
-              <Button
-                type="submit"
-                className="fa fa-plus fa-lg "
-                onSubmit={this.handleAdd}
-              ></Button>
-            </Col>
-            <Col sm={12} md={6} lg={7} className="mt-2">
+          <Col sm={2} md={2} className="mt-2">
+            <Button
+              className="fa fa-plus fa-lg "
+              onClick={this.handleAdd}
+            ></Button>
+          </Col>
+          <Col sm={12} md={6} className="mt-2">
+            <Form onSubmit={this.handleSubmit}>
               <FormGroup row>
-                <Col sm={9} md={8}>
+                <Col sm={10} md={8}>
                   <Input
-                    onSubmit={this.handleSubmit}
                     type="text"
                     placeholder="Nhập tên"
                     defaultValue=""
-                    ref={this.searchName}
+                    innerRef={(input) => (this.searchName = input)}
                   />
                 </Col>
-                <Col sm={1} md={2}>
+                <Col sm={2} md={4}>
                   <Button
-                    type="submit"
-                    value="Tìm"
                     name="submit"
                     className="fa fa-search fa-lg "
                     color="primary"
@@ -223,9 +193,9 @@ class StaffList extends Component {
                   </Button>
                 </Col>
               </FormGroup>
-            </Col>
-          </FormGroup>
-        </Form> */}
+            </Form>
+          </Col>
+        </Row>
         <hr />
         <div className="row">
           {this.state.staffs.map((staff) => {
