@@ -252,6 +252,7 @@ class StaffList extends Component {
                       id="dob"
                       name="dob"
                       placeholder="dd/mm/yyyy"
+                      value={this.state.tenState}
                       className="form-control"
                       validators={{ required }}
                     />
@@ -277,6 +278,7 @@ class StaffList extends Component {
                       name="startdate"
                       className="form-control"
                       placeholder="dd/mm/yyyy"
+                      value={this.state.tenState}
                       validators={{ required }}
                     />
                     <Errors
@@ -331,6 +333,7 @@ class StaffList extends Component {
                       step={0.1}
                       precision={1}
                       max={3.0}
+                      value={this.state.tenState}
                       className="form-control"
                       validators={{
                         required,
@@ -360,6 +363,7 @@ class StaffList extends Component {
                       model=".annualleave"
                       id="annualleave"
                       name="annualleave"
+                      value={this.state.tenState}
                       min={0.0}
                       step={0.5}
                       precision={1}
@@ -381,12 +385,13 @@ class StaffList extends Component {
                     Số ngày đã làm thêm:
                   </Label>
                   <Col md={8}>
-                    <Input
+                    <Control.input
                       type="number"
                       model="overtime"
                       id="overtime"
                       name="overtime"
                       className="form-control"
+                      value={this.state.tenState}
                     />
                   </Col>
                 </Row>
