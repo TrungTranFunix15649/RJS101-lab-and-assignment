@@ -33,29 +33,14 @@ class StaffList extends Component {
       searchedStaff: "",
       staffs: props.staffs,
       ListForSearch: props.staffs,
-      // staffname: "",
-      // dob: "",
-      // salaryscale: "",
-      // startdate: "",
-      // department: "",
-      // annualleave: 0,
-      // overtime: 0,
 
       isAddOpen: false,
-      // touched: {
-      //   staffname: false,
-      //   dob: false,
-      //   startdate: false,
-      //   salaryscale: false,
-      // },
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.searchName = React.createRef();
     this.handleAdd = this.handleAdd.bind(this);
-    // this.handleInputChange = this.handleInputChange.bind(this);
+
     this.handleNewStaff = this.handleNewStaff.bind(this);
-    // this.handleBlur = this.handleBlur.bind(this);
-    // this.validate = this.validate.bind(this);
   }
 
   // Chức năng tìm kiếm tên nhân viên khi nhập tên và nhấn Tìm
@@ -71,14 +56,7 @@ class StaffList extends Component {
     console.log(this.state.ListForSearch);
     this.setState({ staffs: filteredStaff });
   }
-  // Cập nhật thay đổi trạng thái khi nhập thông tin nhân viên mới
-  // handleInputChange(event) {
-  //   const value = event.target.value;
-  //   const name = event.target.name;
-  //   this.setState({
-  //     [name]: value,
-  //   });
-  // }
+
   // Lấy thông tin nhân viên đã nhập để đưa vào danh sách nhân viên cần in ra màn hình
   handleNewStaff(values) {
     const newStaff = {
@@ -123,43 +101,8 @@ class StaffList extends Component {
       </Card>
     );
   }
-  // handleBlur = (field) => (evt) => {
-  //   this.setState({
-  //     touched: { ...this.state.touched, [field]: true },
-  //   });
-  // };
-  // Xác minh thông tin nhân viên mới được nhập vào có hợp lệ không
-  // validate(staffname, dob, startdate, salaryscale) {
-  //   const errors = {
-  //     staffname: "",
-  //     dob: "",
-  //     startdate: "",
-  //     salaryscale: "",
-  //   };
-  // Trường tên không được để trống, phải nhiều hơn 2 kí tự và ít hơn 30 kí tự
-  //   if (this.state.touched.staffname & (staffname.length === 0))
-  //     errors.staffname = "Yêu cầu nhập";
-  //   else if (this.state.touched.staffname & (staffname.length < 3))
-  //     errors.staffname = "Yêu cầu nhiều hơn 2 kí tự";
-  //   else if (this.state.touched.staffname & (staffname.length > 30))
-  //     errors.staffname = "Yêu cầu ít hơn 30 kí tự";
 
-  //   if (this.state.touched.dob & (dob.length === 0))
-  //     errors.dob = "Yêu cầu nhập";
-  //   if (this.state.touched.startdate & (startdate.length === 0))
-  //     errors.startdate = "Yêu cầu nhập";
-  //   if (this.state.touched.salaryscale & (salaryscale.length === 0))
-  //     errors.salaryscale = "Yêu cầu nhập 1.0 - 3.0";
-
-  //   return errors;
-  // }
   render() {
-    // const errors = this.validate(
-    //   this.state.staffname,
-    //   this.state.dob,
-    //   this.state.startdate,
-    //   this.state.salaryscale
-    // );
     return (
       <div className="container">
         <Row>
@@ -411,67 +354,3 @@ class StaffList extends Component {
   }
 }
 export default StaffList;
-
-/////////////Code using HOOK avail for react 16.8 and above
-/*
-function RenderStaffs({ staff }) {
-  return (
-    <Card>
-      <Link to={`/staffs/${staff.id}`}>
-        <CardImg width="100%" src={staff.image} alt={staff.name} />
-        <CardTitle>{staff.name}</CardTitle>
-      </Link>
-    </Card>
-  );
-}
-
-const StaffList = (props) => {
-  let [searchName, setSearchName] = useState("");
-  let handleSubmit = (event) => {
-    event.preventDefault();
-
-    let nameInput = event.target.searchname.value; // accessing directly
-    searchName = nameInput;
-    setSearchName(searchName);
-    console.log(searchName);
-  };
-  const stafflist = props.staffs.map((staff) => {
-    // if (searchName == "") {
-    //   return (
-    //     <div key={staff.id} className="col-12 col-md-4 col-lg-2 ">
-    //       <RenderStaffs staff={staff} />
-    //     </div>
-    //   );
-    // } else {
-    //   return (
-    //     <div key={staff.id} className="col-12 col-md-4 col-lg-2 ">
-    //       <RenderStaffs staff={searchName} />
-    //     </div>
-    //   );
-    // }
-    return (
-      <div key={staff.id} className="col-12 col-md-4 col-lg-2 ">
-        <RenderStaffs staff={staff} />
-      </div>
-    );
-  });
-
-  return (
-    <div className="container">
-      <div className="row">
-        <div className="col-12 col-md-5 col-lg-4">
-          <h3>NHÂN VIÊN</h3>
-          <hr />
-        </div>
-        <form className="ml-auto mr-3 search " onSubmit={handleSubmit}>
-          <label>Tìm nhân viên</label>
-          <input type="text" placeholder="Họ và Tên" name="searchname"></input>
-          <input className="fa fa-search fa-lg searchname" type="submit" />
-        </form>
-      </div>
-      <div className="row">{stafflist}</div>
-    </div>
-  );
-};
-export default StaffList;
-*/
