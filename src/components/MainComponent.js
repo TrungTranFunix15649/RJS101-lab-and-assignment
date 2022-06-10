@@ -9,6 +9,7 @@ import Footer from "./FooterComponent";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { addComment, fetchDishes } from "../redux/ActionCreators";
+import { actions } from "react-redux-form";
 
 const mapStateToProps = (state) => {
   return {
@@ -18,13 +19,16 @@ const mapStateToProps = (state) => {
     leaders: state.leaders,
   };
 };
-
+//fetchDishes is a thunk, being fetched to fetchDishes, then this will be fetched in Main
 const mapDispatchToProps = (dispatch) => ({
   addComment: (dishId, rating, author, comment) =>
     dispatch(addComment(dishId, rating, author, comment)),
   fetchDishes: () => {
     dispatch(fetchDishes());
-  }, //fetchDishes is a thunk, being fetched to fetchDishes, then this will be fetched in Main
+  },
+  resetFeedbackForm: () => {
+    dispatch(actions.reset("feedback"));
+  },
 });
 class Main extends Component {
   constructor(props) {
@@ -79,7 +83,13 @@ class Main extends Component {
             //onclick method is missing in this lab 05.2 router
           />
           <Route path="/menu/:dishId" component={DishWithID} />
-          <Route exact path="/contactus" component={Contact} />
+          <Route
+            exact
+            path="/contactus"
+            component={() => (
+              <Contact resetFeedbackForm={this.props.resetFeedbackForm} />
+            )}
+          />
           <Route
             exact
             path="/aboutus"
