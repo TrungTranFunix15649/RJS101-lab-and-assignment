@@ -11,8 +11,6 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  NavItem,
-  Nav,
   Col,
   Row,
   Label,
