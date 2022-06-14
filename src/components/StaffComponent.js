@@ -84,6 +84,7 @@ class StaffList extends Component {
       ListForSearch: this.state.ListForSearch.push(newStaff),
     });
     this.handleAdd();
+    console.log(newStaff);
     console.log(this.state.ListForSearch);
   }
   // thêm nhân viên -Mở thẻ để nhập thông tin của nhân viên mới
@@ -330,7 +331,7 @@ class StaffList extends Component {
                   <Col md={8}>
                     <Control.input
                       type="number"
-                      model="overtime"
+                      model=".overtime"
                       id="overtime"
                       name="overtime"
                       className="form-control"
