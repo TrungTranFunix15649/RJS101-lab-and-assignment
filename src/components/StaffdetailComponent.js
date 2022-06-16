@@ -58,7 +58,7 @@ const StaffDetail = (props) => {
                   Ngày vào công ty:{" "}
                   {dateFormat(props.staff.startDate, "dd/mm/yyyy")}
                 </div>
-                <div>Phòng ban: {props.staff.department.name}</div>
+                <div>Phòng ban: {props.staff.departmentId}</div>
                 <div>Số ngày nghỉ còn lại: {props.staff.annualLeave}</div>
                 <div>Số ngày đã làm thêm: {props.staff.overTime}</div>
               </CardBody>

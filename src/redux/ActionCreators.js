@@ -1,11 +1,32 @@
 import { STAFFS } from "../shared/staffs";
 import { DEPARTMENTS } from "../shared/staffs";
 import * as ActionTypes from "./ActionTypes";
+import { baseUrl } from "../shared/baseUrl";
 
 // Thunk returns a function to deliver staffs infor.
 export const fetchStaffs = () => (dispatch) => {
   dispatch(staffsLoading(true));
-  dispatch(addStaffs(STAFFS));
+  return fetch(baseUrl + "staffs")
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error(
+            "Error " + response.status + ": " + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then((response) => response.json())
+    .then((staffs) => dispatch(addStaffs(staffs)))
+    .catch((error) => dispatch(staffsFailed(error.message)));
 };
 
 // Action objects to facilitate the thunk
@@ -26,7 +47,27 @@ export const addStaffs = (staffs) => ({
 // Thunk returns a function to deliver department infor.
 export const fetchDepts = () => (dispatch) => {
   dispatch(deptsLoading(true));
-  dispatch(addDepts(DEPARTMENTS));
+  return fetch(baseUrl + "departments")
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error(
+            "Error " + response.status + ": " + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then((response) => response.json())
+    .then((departments) => dispatch(addDepts(departments)))
+    .catch((error) => dispatch(deptsFailed(error.message)));
 };
 // Action objects to facilitate the thunk
 export const deptsLoading = () => ({

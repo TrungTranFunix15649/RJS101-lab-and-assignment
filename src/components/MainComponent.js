@@ -89,11 +89,7 @@ class Main extends Component {
             )}
           />
 
-          <Route
-            exact
-            path="/contactus"
-            component={() => <Contact leaders={this.props.leaders} />}
-          />
+          <Route exact path="/contactus" component={() => <Contact />} />
           <Redirect to="/staffs" />
         </Switch>
 
