@@ -11,9 +11,26 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import dateFormat from "dateformat";
+import { Loading } from "./LoadingComponent";
 
 const StaffDetail = (props) => {
-  if (props.staff != null) {
+  if (props.isLoading) {
+    return (
+      <div className="container">
+        <div className="row">
+          <Loading />
+        </div>
+      </div>
+    );
+  } else if (props.errMess) {
+    return (
+      <div className="container">
+        <div className="row">
+          <h4>{props.errMess}</h4>
+        </div>
+      </div>
+    );
+  } else if (props.staff != null) {
     return (
       <div className="container">
         <div className="row">
@@ -41,7 +58,7 @@ const StaffDetail = (props) => {
                   Ngày vào công ty:{" "}
                   {dateFormat(props.staff.startDate, "dd/mm/yyyy")}
                 </div>
-                <div>Phòng ban: {props.staff.department}</div>
+                <div>Phòng ban: {props.staff.department.name}</div>
                 <div>Số ngày nghỉ còn lại: {props.staff.annualLeave}</div>
                 <div>Số ngày đã làm thêm: {props.staff.overTime}</div>
               </CardBody>

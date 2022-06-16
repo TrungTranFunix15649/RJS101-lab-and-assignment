@@ -9,9 +9,11 @@ import Footer from "./FooterComponent";
 import Payslip from "./PayslipComponent";
 // import { STAFFS } from "../shared/staffs";
 // import { DEPARTMENTS } from "../shared/staffs";
+import { addStaffs, fetchStaffs, fetchDepts } from "../redux/ActionCreators";
 
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { Loading } from "./LoadingComponent";
 
 const mapStateToProps = (state) => {
   return {
@@ -20,13 +22,23 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = (dispatch) => ({
+  fetchStaffs: () => {
+    dispatch(fetchStaffs());
+  },
+  fetchDepts: () => {
+    dispatch(fetchDepts());
+  },
+});
+
 class Main extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   staffs: STAFFS,
-    //   departments: DEPARTMENTS,
-    // };
+  }
+
+  componentDidMount() {
+    this.props.fetchStaffs();
+    this.props.fetchDepts();
   }
 
   render() {
@@ -34,10 +46,12 @@ class Main extends Component {
       return (
         <StaffDetail
           staff={
-            this.props.staffs.filter(
+            this.props.staffs.staffs.filter(
               (staff) => staff.id === parseInt(match.params.id, 10)
-            )[0]
+            )[0] || []
           }
+          isLoading={this.props.staffs.isLoading}
+          errMess={this.props.staffs.errMess}
         />
       );
     };
@@ -49,18 +63,30 @@ class Main extends Component {
           <Route
             exact
             path="/staffs"
-            component={() => <StaffList staffs={this.props.staffs} />}
+            component={() => (
+              <StaffList
+                staffs={this.props.staffs.staffs}
+                staffsLoading={this.props.staffs.isLoading}
+                staffsErrMess={this.props.staffs.errMess}
+              />
+            )}
           />
           <Route path="/staffs/:id" component={StaffWithID} />
 
           <Route
             path="/payslip"
-            component={() => <Payslip staffs={this.props.staffs} />}
+            component={() => <Payslip staffs={this.props.staffs.staffs} />}
           />
           <Route
             exact
             path="/departments"
-            component={() => <DeptList depts={this.props.departments} />}
+            component={() => (
+              <DeptList
+                depts={this.props.departments.departments}
+                deptsLoading={this.props.departments.isLoading}
+                deptsErrMess={this.props.departments.errMess}
+              />
+            )}
           />
 
           <Route
@@ -77,4 +103,4 @@ class Main extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

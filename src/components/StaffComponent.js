@@ -18,6 +18,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Control, LocalForm, Errors } from "react-redux-form";
+import { Loading } from "./LoadingComponent";
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len;
@@ -92,7 +93,7 @@ class StaffList extends Component {
     this.setState({ isAddOpen: !this.state.isAddOpen });
   }
   // In thẻ thông tin của nhân viên ra màn hình trang
-  RenderStaffs(staff) {
+  RenderStaff(staff) {
     return (
       <Card>
         <Link to={`/staffs/${staff.id}`}>
@@ -101,6 +102,34 @@ class StaffList extends Component {
         </Link>
       </Card>
     );
+  }
+
+  RenderStaffs() {
+    if (this.props.staffsLoading) {
+      return (
+        <div className="container">
+          <div className="row">
+            <Loading />
+          </div>
+        </div>
+      );
+    } else if (this.props.staffsErrMess) {
+      return (
+        <div className="container">
+          <div className="row">
+            <h4>{this.props.staffsErrMess}</h4>
+          </div>
+        </div>
+      );
+    } else if (this.props.staffs != null) {
+      return this.state.staffs.map((staff) => {
+        return (
+          <div key={staff.id} className="col-sm-6 col-md-4 col-lg-2 mb-2 ">
+            {this.RenderStaff(staff)}
+          </div>
+        );
+      });
+    }
   }
 
   render() {
@@ -142,15 +171,7 @@ class StaffList extends Component {
           </Col>
         </Row>
         <hr />
-        <div className="row">
-          {this.state.staffs.map((staff) => {
-            return (
-              <div key={staff.id} className="col-sm-6 col-md-4 col-lg-2 mb-2 ">
-                {this.RenderStaffs(staff)}
-              </div>
-            );
-          })}
-        </div>
+        <div className="row">{this.RenderStaffs()}</div>
         <Modal isOpen={this.state.isAddOpen} toggle={this.handleAdd}>
           <ModalHeader toggle={this.handleAdd}>Thêm nhân viên</ModalHeader>
           <ModalBody>
