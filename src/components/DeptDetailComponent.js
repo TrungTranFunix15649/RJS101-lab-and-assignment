@@ -24,7 +24,8 @@ function RenderStaff(staff) {
   );
 }
 function RenderStaffs(staffs) {
-  return staffs.map((staff) => {
+  console.log(staffs);
+  return staffs.staffs.map((staff) => {
     return (
       <div key={staff.id} className="col-sm-6 col-md-4 col-lg-2 mb-2 ">
         {RenderStaff(staff)}
@@ -34,24 +35,44 @@ function RenderStaffs(staffs) {
 }
 const DeptDetail = (props) => {
   console.log(props);
-  return (
-    <div className="container">
-      <div className="row">
-        <Breadcrumb>
-          <BreadcrumbItem>
-            <Link to="/departments">Phòng ban</Link>
-          </BreadcrumbItem>
-          <BreadcrumbItem active>{props.dept.name}</BreadcrumbItem>
-        </Breadcrumb>
+  if (props.isLoading) {
+    return (
+      <div className="container">
+        <div className="row">
+          <Loading />
+        </div>
       </div>
-      <div className="row">
-        <RenderStaffs
-          staffs={props.staffs.filter(
-            (staff) => staff.departmentId === props.dept.id
-          )}
-        />
+    );
+  } else if (props.errMess) {
+    return (
+      <div className="container">
+        <div className="row">
+          <h4>{props.errMess}</h4>
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else if (props.dept != null) {
+    return (
+      <div className="container">
+        <div className="row">
+          <Breadcrumb>
+            <BreadcrumbItem>
+              <Link to="/departments">Phòng ban</Link>
+            </BreadcrumbItem>
+            <BreadcrumbItem active>{props.dept.name}</BreadcrumbItem>
+          </Breadcrumb>
+        </div>
+        <div className="row">
+          <RenderStaffs
+            staffs={props.staffs.filter(
+              (staff) => staff.departmentId === props.dept.id
+            )}
+          />
+        </div>
+      </div>
+    );
+  } else {
+    return <div></div>;
+  }
 };
 export default DeptDetail;

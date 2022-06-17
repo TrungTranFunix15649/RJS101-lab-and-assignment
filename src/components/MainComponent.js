@@ -58,11 +58,12 @@ class Main extends Component {
     };
 
     const DeptWithID = ({ match }) => {
+      console.log(this.props.departments.departments);
       return (
         <DeptDetail
           dept={
             this.props.departments.departments.filter(
-              (dept) => dept.id === parseInt(match.params.id, 10)
+              (dept) => dept.id === match.params.id
             )[0] || []
           }
           isLoading={this.props.departments.isLoading}
@@ -104,9 +105,9 @@ class Main extends Component {
               />
             )}
           />
-          <Route path="departments/:id" component={DeptWithID} />
+          <Route path="/departments/:id" component={DeptWithID} />
           <Route exact path="/contactus" component={() => <Contact />} />
-          {/* <Redirect to="/staffs" /> */}
+          <Redirect to="/staffs" />
         </Switch>
 
         <Footer />
