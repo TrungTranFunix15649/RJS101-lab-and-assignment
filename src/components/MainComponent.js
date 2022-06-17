@@ -4,6 +4,7 @@ import StaffList from "./StaffComponent";
 import Contact from "./ContactComponent";
 import StaffDetail from "./StaffdetailComponent";
 import DeptList from "./DeptComponent";
+import DeptDetail from "./DeptDetailComponent";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
 import Payslip from "./PayslipComponent";
@@ -56,6 +57,21 @@ class Main extends Component {
       );
     };
 
+    const DeptWithID = ({ match }) => {
+      return (
+        <DeptDetail
+          dept={
+            this.props.departments.departments.filter(
+              (dept) => dept.id === parseInt(match.params.id, 10)
+            )[0] || []
+          }
+          isLoading={this.props.departments.isLoading}
+          errMess={this.props.departments.errMess}
+          staffs={this.props.staffs.staffs}
+        />
+      );
+    };
+
     return (
       <div>
         <Header />
@@ -88,9 +104,9 @@ class Main extends Component {
               />
             )}
           />
-
+          <Route path="departments/:id" component={DeptWithID} />
           <Route exact path="/contactus" component={() => <Contact />} />
-          <Redirect to="/staffs" />
+          {/* <Redirect to="/staffs" /> */}
         </Switch>
 
         <Footer />

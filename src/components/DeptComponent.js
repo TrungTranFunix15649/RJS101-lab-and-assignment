@@ -8,6 +8,7 @@ import {
   CardText,
   CardTitle,
 } from "reactstrap";
+import { Link } from "react-router-dom";
 import { Loading } from "./LoadingComponent";
 import { baseUrl } from "../shared/baseUrl";
 
@@ -33,12 +34,14 @@ function DeptList(props) {
       return (
         <div key={dept.id} className="col-12 col-md-5 col-lg-4 mb-3 mt-3">
           <Card>
-            <CardTitle>
-              <CardHeader>{dept.name}</CardHeader>
-            </CardTitle>
-            <CardBody>
-              <div>Số lượng nhân viên: {dept.numberOfStaff}</div>
-            </CardBody>
+            <Link to={`/departments/${dept.id}`}>
+              <CardTitle>
+                <CardHeader>{dept.name}</CardHeader>
+              </CardTitle>
+              <CardBody>
+                <div>Số lượng nhân viên: {dept.numberOfStaff}</div>
+              </CardBody>
+            </Link>
           </Card>
         </div>
       );
