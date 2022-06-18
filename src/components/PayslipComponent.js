@@ -9,7 +9,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Loading } from "./LoadingComponent";
-import { Fade, SlideInDown } from "react-animation-components";
+import { Fade } from "react-animation-components";
 
 function DeptName(props) {
   console.log("Test ID:", props.id);
@@ -43,28 +43,26 @@ function RenderPayslip(staffssalary) {
       return (
         <div key={staff.id} className="col-12 col-md-5 col-lg-4 mb-2">
           <Fade in enterOpacity={0.8}>
-            <SlideInDown durationMs={500}>
-              <Card>
-                <CardHeader>
-                  <CardTitle>{staff.name}</CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <p>Mã nhân viên: {staff.id}</p>
-                  <p>
-                    Bộ phận:{" "}
-                    <DeptName
-                      id={staff.departmentId}
-                      departments={staffssalary.departments}
-                    />
-                  </p>
-                  <p>Hệ số lương: {staff.salaryScale}</p>
-                  <p>Số ngày làm thêm: {staff.overTime}</p>
-                </CardBody>
-                <CardHeader>
-                  <p>Lương: {staff.salary}</p>
-                </CardHeader>
-              </Card>
-            </SlideInDown>
+            <Card>
+              <CardHeader>
+                <CardTitle>{staff.name}</CardTitle>
+              </CardHeader>
+              <CardBody>
+                <p>Mã nhân viên: {staff.id}</p>
+                <p>
+                  Bộ phận:{" "}
+                  <DeptName
+                    id={staff.departmentId}
+                    departments={staffssalary.departments}
+                  />
+                </p>
+                <p>Hệ số lương: {staff.salaryScale}</p>
+                <p>Số ngày làm thêm: {staff.overTime}</p>
+              </CardBody>
+              <CardHeader>
+                <p>Lương: {staff.salary}</p>
+              </CardHeader>
+            </Card>
           </Fade>
         </div>
       );
