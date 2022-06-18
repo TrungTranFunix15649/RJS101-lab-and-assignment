@@ -11,7 +11,7 @@ import Payslip from "./PayslipComponent";
 // import { STAFFS } from "../shared/staffs";
 // import { DEPARTMENTS } from "../shared/staffs";
 import {
-  addStaffs,
+  postStaff,
   fetchStaffs,
   fetchDepts,
   fetchSalary,
@@ -43,6 +43,26 @@ const mapDispatchToProps = (dispatch) => ({
   fetchSalary: () => {
     dispatch(fetchSalary());
   },
+  postStaff: (
+    name,
+    doB,
+    salaryScale,
+    startDate,
+    departmentId,
+    annualLeave,
+    overTime
+  ) =>
+    dispatch(
+      postStaff(
+        name,
+        doB,
+        salaryScale,
+        startDate,
+        departmentId,
+        annualLeave,
+        overTime
+      )
+    ),
 });
 
 class Main extends Component {
@@ -113,6 +133,7 @@ class Main extends Component {
                     staffs={this.props.staffs.staffs}
                     staffsLoading={this.props.staffs.isLoading}
                     staffsErrMess={this.props.staffs.errMess}
+                    postStaff={this.props.postStaff}
                   />
                 )}
               />

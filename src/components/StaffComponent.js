@@ -19,7 +19,6 @@ import {
 import { Link } from "react-router-dom";
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Loading } from "./LoadingComponent";
-import { baseUrl } from "../shared/baseUrl";
 import { FadeTransform } from "react-animation-components";
 
 const required = (val) => val && val.length;
@@ -62,8 +61,32 @@ class StaffList extends Component {
 
   // Lấy thông tin nhân viên đã nhập để đưa vào danh sách nhân viên cần in ra màn hình
   handleNewStaff(values) {
+    // const newStaff = {
+    //   id: "",
+    //   name: "",
+    //   doB: "",
+    //   salaryScale: "",
+    //   startDate: "",
+    //   department: "",
+    //   annualLeave: 0,
+    //   overTime: 0,
+    //   image: "/assets/images/alberto.png",
+    // };
+    // newStaff.id =
+    //   this.state.ListForSearch[this.state.ListForSearch.length - 1].id + 1;
+
+    // newStaff.name = values.staffname;
+    // newStaff.doB = values.dob;
+    // newStaff.salaryScale = values.salaryscale;
+    // newStaff.startDate = values.startdate;
+    // newStaff.department = values.department;
+    // newStaff.annualLeave = values.annualleave;
+    // newStaff.overTime = values.overtime;
+    // this.setState({
+    //   ListForSearch: this.state.ListForSearch.push(newStaff),
+    // });
+    // add new staff to server
     const newStaff = {
-      id: "",
       name: "",
       doB: "",
       salaryScale: "",
@@ -73,8 +96,6 @@ class StaffList extends Component {
       overTime: 0,
       image: "/assets/images/alberto.png",
     };
-    newStaff.id =
-      this.state.ListForSearch[this.state.ListForSearch.length - 1].id + 1;
 
     newStaff.name = values.staffname;
     newStaff.doB = values.dob;
@@ -83,12 +104,19 @@ class StaffList extends Component {
     newStaff.department = values.department;
     newStaff.annualLeave = values.annualleave;
     newStaff.overTime = values.overtime;
-    this.setState({
-      ListForSearch: this.state.ListForSearch.push(newStaff),
-    });
+    // Đưa thông tin nhân viên nhập lên server
+    this.props.postStaff(
+      values.staffname,
+      values.dob,
+      values.salaryscale,
+      values.startdate,
+      values.department,
+      values.annualleave,
+      values.overtime
+    );
     this.handleAdd();
     console.log(newStaff);
-    console.log(this.state.ListForSearch);
+    console.log(this.props.staffs);
   }
   // thêm nhân viên -Mở thẻ để nhập thông tin của nhân viên mới
   handleAdd() {
@@ -277,11 +305,11 @@ class StaffList extends Component {
                       validators={{ required }}
                     >
                       <option defaultValue value=""></option>
-                      <option value="Finance">Finance</option>
-                      <option value="HR">HR</option>
-                      <option value="IT">IT</option>
-                      <option value="Marketing">Marketing</option>
-                      <option value="Sale">Sale</option>
+                      <option value="Dept05">Finance</option>
+                      <option value="Dept02">HR</option>
+                      <option value="Dept04">IT</option>
+                      <option value="Dept03">Marketing</option>
+                      <option value="Dept01">Sale</option>
                     </Control.select>
                     <Errors
                       className="text-danger"

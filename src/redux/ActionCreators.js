@@ -82,47 +82,6 @@ export const addDepts = (departments) => ({
   payload: departments,
 });
 
-//Thunk for salary
-/*
-export const fetchSalary = () => (dispatch) => {
-  dispatch(salaryLoading(true));
-  return fetch(baseUrl + "staffsSalary")
-    .then(
-      (response) => {
-        if (response.ok) {
-          return response;
-        } else {
-          var error = new Error(
-            "Error" + response.status + ": " + response.statusText
-          );
-          error.response = response;
-          throw error;
-        }
-      },
-      (error) => {
-        var errmess = new Error(error.message);
-        throw errmess;
-      }
-    )
-    .then((response) => response.json())
-    .then((staffssalary) => dispatch(addSalary(staffssalary)))
-    .catch((error) => dispatch(salaryFailed(error.message)));
-};
-export const salaryLoading = () => ({
-  type: ActionTypes.SALARY_LOADING,
-});
-
-export const salaryFailed = () => (errmess) => ({
-  type: ActionTypes.SALARY_FAILED,
-  payload: errmess,
-});
-
-export const addSalary = (staffssalary) => ({
-  type: ActionTypes.ADD_SALARY,
-  payload: staffssalary,
-});
-*/
-
 export const fetchSalary = () => (dispatch) => {
   dispatch(staffsLoading(true));
   return fetch(baseUrl + "staffsSalary")
@@ -162,3 +121,56 @@ export const addSalary = (staffssalary) => ({
   type: ActionTypes.ADD_SALARY,
   payload: staffssalary,
 });
+
+// Add new staff
+export const addStaff = (staff) => ({
+  type: ActionTypes.ADD_STAFF,
+  payload: staff,
+});
+
+export const postStaff =
+  (name, doB, salaryScale, startDate, departmentId, annualLeave, overTime) =>
+  (dispatch) => {
+    const newStaff = {
+      name: name,
+      doB: doB,
+      departmentId: departmentId,
+      startDate: startDate,
+      salaryScale: salaryScale,
+      overTime: overTime,
+      annualLeave: annualLeave,
+      image: "/assets/images/alberto.png",
+      salary: salaryScale * 3000000 + overTime * 200000,
+    };
+    return fetch(baseUrl + "staffs", {
+      method: "POST",
+      body: JSON.stringify(newStaff),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "same-origin",
+    })
+      .then(
+        (response) => {
+          if (response.ok) {
+            return response;
+          } else {
+            var error = new Error(
+              "Error " + response.status + ": " + response.statusText
+            );
+            error.response = response;
+            throw error;
+          }
+        },
+        (error) => {
+          var errmess = new Error(error.message);
+          throw errmess;
+        }
+      )
+      .then((response) => response.json())
+      .then((response) => dispatch(addStaff(response)))
+      .catch((error) => {
+        console.log("Post staff ", error.message);
+        alert("Your staff could not be added. Error: " + error.message);
+      });
+  };
