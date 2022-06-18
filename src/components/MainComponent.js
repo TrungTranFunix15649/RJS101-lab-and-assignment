@@ -19,7 +19,11 @@ import {
 
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { Loading } from "./LoadingComponent";
+import {
+  TransitionGroup,
+  CSSTransition,
+  Transition,
+} from "react-transition-group";
 
 const mapStateToProps = (state) => {
   return {
@@ -94,46 +98,54 @@ class Main extends Component {
     return (
       <div>
         <Header />
-        <Switch>
-          <Route
-            exact
-            path="/staffs"
-            component={() => (
-              <StaffList
-                staffs={this.props.staffs.staffs}
-                staffsLoading={this.props.staffs.isLoading}
-                staffsErrMess={this.props.staffs.errMess}
+        <TransitionGroup>
+          <CSSTransition
+            key={this.props.location.key}
+            classNames="page"
+            timeout={300}
+          >
+            <Switch>
+              <Route
+                exact
+                path="/staffs"
+                component={() => (
+                  <StaffList
+                    staffs={this.props.staffs.staffs}
+                    staffsLoading={this.props.staffs.isLoading}
+                    staffsErrMess={this.props.staffs.errMess}
+                  />
+                )}
               />
-            )}
-          />
-          <Route path="/staffs/:id" component={StaffWithID} />
+              <Route path="/staffs/:id" component={StaffWithID} />
 
-          <Route
-            path="/payslip"
-            component={() => (
-              <Payslip
-                staffssalary={this.props.staffssalary.staffssalary}
-                salLoading={this.props.staffssalary.isLoading}
-                salErrMess={this.props.staffssalary.errMess}
-                departments={this.props.departments.departments}
+              <Route
+                path="/payslip"
+                component={() => (
+                  <Payslip
+                    staffssalary={this.props.staffssalary.staffssalary}
+                    salLoading={this.props.staffssalary.isLoading}
+                    salErrMess={this.props.staffssalary.errMess}
+                    departments={this.props.departments.departments}
+                  />
+                )}
               />
-            )}
-          />
-          <Route
-            exact
-            path="/departments"
-            component={() => (
-              <DeptList
-                depts={this.props.departments.departments}
-                deptsLoading={this.props.departments.isLoading}
-                deptsErrMess={this.props.departments.errMess}
+              <Route
+                exact
+                path="/departments"
+                component={() => (
+                  <DeptList
+                    depts={this.props.departments.departments}
+                    deptsLoading={this.props.departments.isLoading}
+                    deptsErrMess={this.props.departments.errMess}
+                  />
+                )}
               />
-            )}
-          />
-          <Route path="/departments/:id" component={DeptWithID} />
-          <Route exact path="/contactus" component={() => <Contact />} />
-          <Redirect to="/staffs" />
-        </Switch>
+              <Route path="/departments/:id" component={DeptWithID} />
+              <Route exact path="/contactus" component={() => <Contact />} />
+              <Redirect to="/staffs" />
+            </Switch>
+          </CSSTransition>
+        </TransitionGroup>
 
         <Footer />
       </div>
