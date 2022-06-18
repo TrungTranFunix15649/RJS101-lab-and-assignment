@@ -10,7 +10,12 @@ import Footer from "./FooterComponent";
 import Payslip from "./PayslipComponent";
 // import { STAFFS } from "../shared/staffs";
 // import { DEPARTMENTS } from "../shared/staffs";
-import { addStaffs, fetchStaffs, fetchDepts } from "../redux/ActionCreators";
+import {
+  addStaffs,
+  fetchStaffs,
+  fetchDepts,
+  fetchSalary,
+} from "../redux/ActionCreators";
 
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -20,6 +25,7 @@ const mapStateToProps = (state) => {
   return {
     staffs: state.staffs,
     departments: state.departments,
+    staffssalary: state.staffssalary,
   };
 };
 
@@ -29,6 +35,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   fetchDepts: () => {
     dispatch(fetchDepts());
+  },
+  fetchSalary: () => {
+    dispatch(fetchSalary());
   },
 });
 
@@ -40,10 +49,18 @@ class Main extends Component {
   componentDidMount() {
     this.props.fetchStaffs();
     this.props.fetchDepts();
+    this.props.fetchSalary();
   }
 
   render() {
     const StaffWithID = ({ match }) => {
+      console.log("truyen departments", this.props.departments.departments);
+      console.log(
+        "truyen staff",
+        this.props.staffs.staffs.filter(
+          (staff) => staff.id === parseInt(match.params.id, 10)
+        )[0] || []
+      );
       return (
         <StaffDetail
           staff={
@@ -53,6 +70,7 @@ class Main extends Component {
           }
           isLoading={this.props.staffs.isLoading}
           errMess={this.props.staffs.errMess}
+          departments={this.props.departments.departments}
         />
       );
     };
@@ -72,7 +90,7 @@ class Main extends Component {
         />
       );
     };
-
+    console.log(this.props.departments.departments);
     return (
       <div>
         <Header />
@@ -92,7 +110,14 @@ class Main extends Component {
 
           <Route
             path="/payslip"
-            component={() => <Payslip staffs={this.props.staffs.staffs} />}
+            component={() => (
+              <Payslip
+                staffssalary={this.props.staffssalary.staffssalary}
+                salLoading={this.props.staffssalary.isLoading}
+                salErrMess={this.props.staffssalary.errMess}
+                departments={this.props.departments.departments}
+              />
+            )}
           />
           <Route
             exact

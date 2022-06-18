@@ -8,26 +8,66 @@ import {
   BreadcrumbItem,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { Loading } from "./LoadingComponent";
 
-function Payslip(props) {
-  const payslip = props.staffs.map((staff) => {
+function DeptName(props) {
+  console.log("Test ID:", props.id);
+  console.log("Test dept: ", props.departments);
+  let deptName =
+    props.departments.filter((dept) => dept.id === props.id)[0].name || [];
+  console.log("Tên phòng ban:", deptName);
+  return <span>{deptName}</span>;
+}
+
+function RenderPayslip(staffssalary) {
+  console.log("Staffssalary: ", staffssalary);
+  if (staffssalary.salLoading) {
     return (
-      <div key={staff.id} className="col-12 col-md-5 col-lg-4 mb-2">
-        <Card>
-          <CardTitle>{staff.name}</CardTitle>
-          <CardBody>
-            <p>Mã nhân viên: {staff.id}</p>
-            <p>Hệ số lương: {staff.salaryScale}</p>
-            <p>Số ngày làm thêm: {staff.overTime}</p>
-          </CardBody>
-          <CardHeader>
-            Lương:{" "}
-            {Math.round(staff.salaryScale * 3000000 + staff.overTime * 200000)}
-          </CardHeader>
-        </Card>
+      <div className="container">
+        <div className="row">
+          <Loading />
+        </div>
       </div>
     );
-  });
+  } else if (staffssalary.salErrMess) {
+    return (
+      <div className="container">
+        <div className="row">
+          <h4>{staffssalary.salErrMess}</h4>
+        </div>
+      </div>
+    );
+  } else if (staffssalary.staffssalary !== null) {
+    return staffssalary.staffssalary.map((staff) => {
+      return (
+        <div key={staff.id} className="col-12 col-md-5 col-lg-4 mb-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>{staff.name}</CardTitle>
+            </CardHeader>
+            <CardBody>
+              <p>Mã nhân viên: {staff.id}</p>
+              <p>
+                Bộ phận:{" "}
+                <DeptName
+                  id={staff.departmentId}
+                  departments={staffssalary.departments}
+                />
+              </p>
+              <p>Hệ số lương: {staff.salaryScale}</p>
+              <p>Số ngày làm thêm: {staff.overTime}</p>
+            </CardBody>
+            <CardHeader>
+              <p>Lương: {staff.salary}</p>
+            </CardHeader>
+          </Card>
+        </div>
+      );
+    });
+  }
+}
+function Payslip(props) {
+  console.log(props);
   return (
     <div className="container">
       <div className="row">
@@ -38,7 +78,7 @@ function Payslip(props) {
           <BreadcrumbItem active> Bảng Lương</BreadcrumbItem>
         </Breadcrumb>
       </div>
-      <div className="row">{payslip}</div>
+      <div className="row">{RenderPayslip(props)}</div>
     </div>
   );
 }

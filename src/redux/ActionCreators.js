@@ -1,5 +1,3 @@
-import { STAFFS } from "../shared/staffs";
-import { DEPARTMENTS } from "../shared/staffs";
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
 
@@ -82,4 +80,85 @@ export const deptsFailed = () => (errmess) => ({
 export const addDepts = (departments) => ({
   type: ActionTypes.ADD_DEPTS,
   payload: departments,
+});
+
+//Thunk for salary
+/*
+export const fetchSalary = () => (dispatch) => {
+  dispatch(salaryLoading(true));
+  return fetch(baseUrl + "staffsSalary")
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error(
+            "Error" + response.status + ": " + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then((response) => response.json())
+    .then((staffssalary) => dispatch(addSalary(staffssalary)))
+    .catch((error) => dispatch(salaryFailed(error.message)));
+};
+export const salaryLoading = () => ({
+  type: ActionTypes.SALARY_LOADING,
+});
+
+export const salaryFailed = () => (errmess) => ({
+  type: ActionTypes.SALARY_FAILED,
+  payload: errmess,
+});
+
+export const addSalary = (staffssalary) => ({
+  type: ActionTypes.ADD_SALARY,
+  payload: staffssalary,
+});
+*/
+
+export const fetchSalary = () => (dispatch) => {
+  dispatch(staffsLoading(true));
+  return fetch(baseUrl + "staffsSalary")
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error(
+            "Error " + response.status + ": " + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then((response) => response.json())
+    .then((staffssalary) => dispatch(addSalary(staffssalary)))
+    .catch((error) => dispatch(staffsFailed(error.message)));
+};
+
+// Action objects to facilitate the thunk
+export const salaryLoading = () => ({
+  type: ActionTypes.SALARY_LOADING,
+});
+
+export const salaryFailed = () => (errmess) => ({
+  type: ActionTypes.SALARY_FAILED,
+  payload: errmess,
+});
+
+export const addSalary = (staffssalary) => ({
+  type: ActionTypes.ADD_SALARY,
+  payload: staffssalary,
 });

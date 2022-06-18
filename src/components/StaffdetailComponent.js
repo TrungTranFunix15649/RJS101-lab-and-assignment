@@ -14,6 +14,14 @@ import dateFormat from "dateformat";
 import { Loading } from "./LoadingComponent";
 
 const StaffDetail = (props) => {
+  let deptName = "";
+  if (props.departments !== null && props.staff !== null) {
+    deptName = props.departments.filter(
+      (dept) => dept.id === props.staff.departmentId
+    )[0].name;
+    console.log(deptName);
+  }
+
   if (props.isLoading) {
     return (
       <div className="container">
@@ -30,7 +38,7 @@ const StaffDetail = (props) => {
         </div>
       </div>
     );
-  } else if (props.staff != null) {
+  } else if (props.staff !== null && props.departments !== undefined) {
     return (
       <div className="container">
         <div className="row">
@@ -58,7 +66,7 @@ const StaffDetail = (props) => {
                   Ngày vào công ty:{" "}
                   {dateFormat(props.staff.startDate, "dd/mm/yyyy")}
                 </div>
-                <div>Phòng ban: {props.staff.departmentId}</div>
+                <div>Phòng ban: {deptName}</div>
                 <div>Số ngày nghỉ còn lại: {props.staff.annualLeave}</div>
                 <div>Số ngày đã làm thêm: {props.staff.overTime}</div>
               </CardBody>
