@@ -34,14 +34,15 @@ class StaffList extends Component {
       searchedStaff: "",
       staffs: props.staffs,
       ListForSearch: props.staffs,
-
+      isEditOpen: false,
       isAddOpen: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.searchName = React.createRef();
     this.handleAdd = this.handleAdd.bind(this);
     this.delStaff = this.delStaff.bind(this);
-
+    this.editStaff = this.editStaff.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
     this.handleNewStaff = this.handleNewStaff.bind(this);
   }
 
@@ -100,6 +101,13 @@ class StaffList extends Component {
   delStaff(id) {
     console.log("id", id);
     this.props.deleteStaff(id);
+  }
+  //Chỉnh sửa thông tin
+  handleEdit() {
+    this.setState({ isEditOpen: !this.state.isEditOpen });
+  }
+  editStaff(id) {
+    console.log(id);
   }
   // In thẻ thông tin của nhân viên ra màn hình trang
   RenderStaff(staff) {

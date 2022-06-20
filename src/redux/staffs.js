@@ -37,6 +37,14 @@ export const Staffs = (
       var staffs = action.payload;
       return { ...state, isLoading: false, errMess: null, staffs: staffs };
 
+    case ActionTypes.EDIT_STAFF:
+      return {
+        ...state,
+        isLoading: false,
+        errMess: null,
+        staffs: action.payload,
+      };
+
     default:
       return state;
   }

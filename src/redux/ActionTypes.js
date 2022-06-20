@@ -9,3 +9,4 @@ export const ADD_SALARY = "ADD_SALARY";
 export const SALARY_LOADING = "SALARY_LOADING";
 export const SALARY_FAILED = "SALARY_FAILED";
 export const UPDATE_STAFF = "UPDATE_STAFF";
+export const EDIT_STAFF = "EDIT_STAFF";
