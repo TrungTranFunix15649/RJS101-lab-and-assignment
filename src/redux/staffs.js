@@ -33,6 +33,10 @@ export const Staffs = (
       var staff = action.payload;
       return { ...state, staffs: state.staffs.concat(staff) };
 
+    case ActionTypes.UPDATE_STAFF:
+      var staffs = action.payload;
+      return { ...state, isLoading: false, errMess: null, staffs: staffs };
+
     default:
       return state;
   }

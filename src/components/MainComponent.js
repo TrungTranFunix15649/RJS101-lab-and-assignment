@@ -15,6 +15,7 @@ import {
   fetchStaffs,
   fetchDepts,
   fetchSalary,
+  deleteStaff,
 } from "../redux/ActionCreators";
 
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
@@ -42,6 +43,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   fetchSalary: () => {
     dispatch(fetchSalary());
+  },
+  deleteStaff: (id) => {
+    dispatch(deleteStaff(id));
   },
   postStaff: (
     name,
@@ -78,13 +82,6 @@ class Main extends Component {
 
   render() {
     const StaffWithID = ({ match }) => {
-      console.log("truyen departments", this.props.departments.departments);
-      console.log(
-        "truyen staff",
-        this.props.staffs.staffs.filter(
-          (staff) => staff.id === parseInt(match.params.id, 10)
-        )[0] || []
-      );
       return (
         <StaffDetail
           staff={
@@ -100,7 +97,6 @@ class Main extends Component {
     };
 
     const DeptWithID = ({ match }) => {
-      console.log(this.props.departments.departments);
       return (
         <DeptDetail
           dept={
@@ -114,7 +110,7 @@ class Main extends Component {
         />
       );
     };
-    console.log(this.props.departments.departments);
+
     return (
       <div>
         <Header />
@@ -134,6 +130,7 @@ class Main extends Component {
                     staffsLoading={this.props.staffs.isLoading}
                     staffsErrMess={this.props.staffs.errMess}
                     postStaff={this.props.postStaff}
+                    deleteStaff={this.props.deleteStaff}
                   />
                 )}
               />

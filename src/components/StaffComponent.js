@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import {
   Card,
   CardImg,
@@ -25,7 +24,7 @@ const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len;
 const minLength = (len) => (val) => val && val.length >= len;
 
-const maxVal = (maxvalue) => (val) => !val || Number(val) < maxvalue;
+const maxVal = (maxvalue) => (val) => !val || Number(val) <= maxvalue;
 const minVal = (minvalue) => (val) => val && Number(val) >= minvalue;
 const intNum = (val) => val >= 0 && Number.isInteger(val / 0.5);
 class StaffList extends Component {
@@ -41,6 +40,7 @@ class StaffList extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.searchName = React.createRef();
     this.handleAdd = this.handleAdd.bind(this);
+    this.delStaff = this.delStaff.bind(this);
 
     this.handleNewStaff = this.handleNewStaff.bind(this);
   }
@@ -48,44 +48,18 @@ class StaffList extends Component {
   // Chức năng tìm kiếm tên nhân viên khi nhập tên và nhấn Tìm
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state.ListForSearch);
+
     let filteredStaff = this.state.ListForSearch.filter((staff) => {
       return staff.name
         .toLowerCase()
         .includes(this.searchName.value.toLowerCase());
     });
-    console.log(this.searchName.value);
-    console.log(this.state.ListForSearch);
+
     this.setState({ staffs: filteredStaff });
   }
 
   // Lấy thông tin nhân viên đã nhập để đưa vào danh sách nhân viên cần in ra màn hình
   handleNewStaff(values) {
-    // const newStaff = {
-    //   id: "",
-    //   name: "",
-    //   doB: "",
-    //   salaryScale: "",
-    //   startDate: "",
-    //   department: "",
-    //   annualLeave: 0,
-    //   overTime: 0,
-    //   image: "/assets/images/alberto.png",
-    // };
-    // newStaff.id =
-    //   this.state.ListForSearch[this.state.ListForSearch.length - 1].id + 1;
-
-    // newStaff.name = values.staffname;
-    // newStaff.doB = values.dob;
-    // newStaff.salaryScale = values.salaryscale;
-    // newStaff.startDate = values.startdate;
-    // newStaff.department = values.department;
-    // newStaff.annualLeave = values.annualleave;
-    // newStaff.overTime = values.overtime;
-    // this.setState({
-    //   ListForSearch: this.state.ListForSearch.push(newStaff),
-    // });
-    // add new staff to server
     const newStaff = {
       name: "",
       doB: "",
@@ -122,6 +96,11 @@ class StaffList extends Component {
   handleAdd() {
     this.setState({ isAddOpen: !this.state.isAddOpen });
   }
+  //Xóa nhân viên ra khỏi dữ liệu
+  delStaff(id) {
+    console.log("id", id);
+    this.props.deleteStaff(id);
+  }
   // In thẻ thông tin của nhân viên ra màn hình trang
   RenderStaff(staff) {
     return (
@@ -137,6 +116,9 @@ class StaffList extends Component {
             <CardTitle>{staff.name}</CardTitle>
           </Link>
         </Card>
+        <Button onClick={() => this.delStaff(staff.id)} color="danger">
+          Delete
+        </Button>
       </FadeTransform>
     );
   }

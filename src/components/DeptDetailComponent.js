@@ -12,7 +12,7 @@ import {
 import { Link } from "react-router-dom";
 import dateFormat from "dateformat";
 import { Loading } from "./LoadingComponent";
-
+// Render a single staff information
 function RenderStaff(staff) {
   return (
     <Card>
@@ -23,8 +23,8 @@ function RenderStaff(staff) {
     </Card>
   );
 }
+//Render all staffs from API to screen
 function RenderStaffs(staffs) {
-  console.log(staffs);
   return staffs.staffs.map((staff) => {
     return (
       <div key={staff.id} className="col-sm-6 col-md-4 col-lg-2 mb-2 ">
@@ -33,8 +33,9 @@ function RenderStaffs(staffs) {
     );
   });
 }
+
+// Web component
 const DeptDetail = (props) => {
-  console.log(props);
   if (props.isLoading) {
     return (
       <div className="container">

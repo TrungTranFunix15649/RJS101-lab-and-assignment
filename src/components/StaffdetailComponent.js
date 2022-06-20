@@ -4,6 +4,7 @@ import {
   CardImg,
   CardHeader,
   CardTitle,
+  Button,
   CardBody,
   CardText,
   Breadcrumb,
@@ -19,7 +20,6 @@ const StaffDetail = (props) => {
     deptName = props.departments.filter(
       (dept) => dept.id === props.staff.departmentId
     )[0].name;
-    console.log(deptName);
   }
 
   if (props.isLoading) {

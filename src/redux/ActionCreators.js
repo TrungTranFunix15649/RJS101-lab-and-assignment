@@ -174,3 +174,38 @@ export const postStaff =
         alert("Your staff could not be added. Error: " + error.message);
       });
   };
+
+//Delete a staff
+export const updateStaff = (staffs) => ({
+  type: ActionTypes.UPDATE_STAFF,
+  payload: staffs,
+});
+export const deleteStaff = (id) => (dispatch) => {
+  return fetch(baseUrl + `staffs/${id}`, {
+    method: "DELETE",
+    header: { "Content-Type": "application/json" },
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error(
+            "Error " + response.status + ": " + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then((response) => response.json())
+    .then((response) => dispatch(updateStaff(response)))
+    .catch((error) => {
+      console.log("Delete a staff ", error.message);
+      alert("Your staff could not be deleted. Error: " + error.message);
+    });
+};

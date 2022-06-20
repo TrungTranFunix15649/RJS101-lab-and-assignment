@@ -11,17 +11,16 @@ import { Link } from "react-router-dom";
 import { Loading } from "./LoadingComponent";
 import { Fade } from "react-animation-components";
 
+//Translate department ID to department name
 function DeptName(props) {
-  console.log("Test ID:", props.id);
-  console.log("Test dept: ", props.departments);
   let deptName =
     props.departments.filter((dept) => dept.id === props.id)[0].name || [];
-  console.log("Tên phòng ban:", deptName);
+
   return <span>{deptName}</span>;
 }
 
+//Render staffs with salary from API to web screen
 function RenderPayslip(staffssalary) {
-  console.log("Staffssalary: ", staffssalary);
   if (staffssalary.salLoading) {
     return (
       <div className="container">
@@ -69,8 +68,8 @@ function RenderPayslip(staffssalary) {
     });
   }
 }
+// Payslip component/ page
 function Payslip(props) {
-  console.log(props);
   return (
     <div className="container">
       <div className="row">
