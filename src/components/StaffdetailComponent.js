@@ -46,14 +46,41 @@ class StaffDetail extends Component {
     this.setState({ isEditOpen: !this.state.isEditOpen });
   }
   //Edit information based on input
-  editStaff(id) {
-    console.log(id);
+  editStaff(values) {
+    console.log("Thông tin người dùng:", values);
+    const newStaff = {
+      id: "",
+      name: "",
+      doB: "",
+      salaryScale: "",
+      startDate: "",
+      departmentId: "",
+      annualLeave: 0,
+      overTime: 0,
+      image: "/assets/images/alberto.png",
+      salary: "",
+    };
+    newStaff.id = this.props.staff.id;
+    newStaff.name = values.staffname;
+    newStaff.doB = values.dob;
+    newStaff.salaryScale = values.salaryscale;
+    newStaff.startDate = values.startdate;
+    newStaff.departmentId = values.department;
+    newStaff.annualLeave = values.annualleave;
+    newStaff.overTime = values.overtime;
+    newStaff.salary =
+      Number(values.salaryScale) * 3000000 + Number(values.overTime) * 200000;
+    console.log(
+      "Định dạng hệ số lương:",
+
+      typeof this.props.staff.salaryScale
+    );
+    console.log("Định dạng tên:", typeof values.overTime);
+    console.log("Edited staff: ", newStaff);
   }
   //
-  handleNewStaff(values) {}
   //render staff information
   renderDetail(props) {
-    console.log(typeof props.staff.startDate);
     //transform dept id into dept name
     let deptName = "";
     if (props.departments !== null && props.staff !== null) {
@@ -112,17 +139,16 @@ class StaffDetail extends Component {
                 </CardBody>
               </Card>
               <Button onClick={this.handleEdit} color="warning">
-                Edit
+                Chỉnh sửa
               </Button>
+
               <Modal isOpen={this.state.isEditOpen} toggle={this.handleEdit}>
                 <ModalHeader toggle={this.handleEdit}>
-                  Thêm nhân viên
+                  Cập nhật thông tin nhân viên
                 </ModalHeader>
                 <ModalBody>
                   <div className="col-12 col-md-10">
-                    <LocalForm
-                      onSubmit={(values) => this.handleNewStaff(values)}
-                    >
+                    <LocalForm onSubmit={(values) => this.editStaff(values)}>
                       <Row className="form-group">
                         <Label htmlFor="staffname" md={4}>
                           Tên:
@@ -132,9 +158,8 @@ class StaffDetail extends Component {
                             model=".staffname"
                             id="staffname"
                             name="staffname"
-                            placeholder="Họ và tên"
+                            defaultValue={props.staff.name}
                             className="form-control"
-                            value={props.staff.name}
                             validators={{
                               required,
                               minLength: minLength(3),
@@ -163,8 +188,10 @@ class StaffDetail extends Component {
                             model=".dob"
                             id="dob"
                             name="dob"
-                            placeholder="dd/mm/yyyy"
-                            initialValues={props.staff.doB}
+                            defaultValue={dateFormat(
+                              props.staff.doB,
+                              "yyyy-mm-dd"
+                            )}
                             className="form-control"
                             validators={{ required }}
                           />
@@ -190,7 +217,10 @@ class StaffDetail extends Component {
                             name="startdate"
                             className="form-control"
                             placeholder="dd/mm/yyyy"
-                            value={props.staff.startDate}
+                            defaultValue={dateFormat(
+                              props.staff.startDate,
+                              "yyyy-mm-dd"
+                            )}
                             validators={{ required }}
                           />
                           <Errors
@@ -212,9 +242,10 @@ class StaffDetail extends Component {
                             model=".department"
                             name="department"
                             className="form-control"
+                            defaultValue={props.staff.departmentId}
                             validators={{ required }}
                           >
-                            <option>{deptName}</option>
+                            <option disabled>{deptName}</option>
                             <option value="Dept05">Finance</option>
                             <option value="Dept02">HR</option>
                             <option value="Dept04">IT</option>
@@ -245,10 +276,9 @@ class StaffDetail extends Component {
                             step={0.1}
                             precision={1}
                             max={3.0}
-                            value={props.staff.salaryScale}
+                            defaultValue={props.staff.salaryScale}
                             className="form-control"
                             validators={{
-                              required,
                               minVal: minVal(1.0),
                               maxVal: maxVal(3.0),
                             }}
@@ -258,7 +288,6 @@ class StaffDetail extends Component {
                             model=".salaryscale"
                             show="touched"
                             messages={{
-                              required: "Yêu cầu nhập. ",
                               minVal: "Hệ số >= 1.0. ",
                               maxVal: "Hệ số <= 3.0",
                             }}
@@ -275,7 +304,7 @@ class StaffDetail extends Component {
                             model=".annualleave"
                             id="annualleave"
                             name="annualleave"
-                            value={props.staff.annualLeave}
+                            defaultValue={props.staff.annualLeave}
                             min={0.0}
                             step={0.5}
                             precision={1}
@@ -303,14 +332,14 @@ class StaffDetail extends Component {
                             id="overtime"
                             name="overtime"
                             className="form-control"
-                            value={props.staff.overTime}
+                            defaultValue={props.staff.overTime}
                           />
                         </Col>
                       </Row>
                       <Row className="form-group">
                         <Col md={{ size: 10, offset: 2 }}>
                           <Button type="submit" color="primary">
-                            Thêm
+                            Chỉnh sửa
                           </Button>
                         </Col>
                       </Row>
