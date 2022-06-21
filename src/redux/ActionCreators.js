@@ -209,3 +209,36 @@ export const deleteStaff = (id) => (dispatch) => {
       alert("Your staff could not be deleted. Error: " + error.message);
     });
 };
+
+// edit staff
+export const editStaff = (staff) => (dispatch) => {
+  return fetch(baseUrl + "staffs", {
+    method: "PATCH",
+    body: JSON.stringify(staff),
+    headers: { "Content-Type": "application/json" },
+    credentials: "same-origin",
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error(
+            "Error " + response.status + ": " + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then((response) => response.json())
+    .then((response) => dispatch(updateStaff(response)))
+    .catch((error) => {
+      console.log("Edit a staff ", error.message);
+      alert("Your staff could not be edited. Error: " + error.message);
+    });
+};

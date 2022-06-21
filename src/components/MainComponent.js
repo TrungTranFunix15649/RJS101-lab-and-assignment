@@ -16,6 +16,7 @@ import {
   fetchDepts,
   fetchSalary,
   deleteStaff,
+  editStaff,
 } from "../redux/ActionCreators";
 
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
@@ -46,6 +47,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   deleteStaff: (id) => {
     dispatch(deleteStaff(id));
+  },
+  editStaff: (staff) => {
+    dispatch(editStaff(staff));
   },
   postStaff: (
     name,
@@ -92,6 +96,7 @@ class Main extends Component {
           isLoading={this.props.staffs.isLoading}
           errMess={this.props.staffs.errMess}
           departments={this.props.departments.departments}
+          editStaff={this.props.editStaff}
         />
       );
     };

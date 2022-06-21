@@ -47,7 +47,6 @@ class StaffDetail extends Component {
   }
   //Edit information based on input
   editStaff(values) {
-    console.log("Thông tin người dùng:", values);
     const newStaff = {
       id: "",
       name: "",
@@ -68,14 +67,11 @@ class StaffDetail extends Component {
     newStaff.departmentId = values.department;
     newStaff.annualLeave = values.annualleave;
     newStaff.overTime = values.overtime;
-    newStaff.salary =
-      Number(values.salaryScale) * 3000000 + Number(values.overTime) * 200000;
-    console.log(
-      "Định dạng hệ số lương:",
-
-      typeof this.props.staff.salaryScale
+    newStaff.salary = Math.round(
+      Number(values.salaryscale) * 3000000 + Number(values.overtime) * 200000
     );
-    console.log("Định dạng tên:", typeof values.overTime);
+    this.props.editStaff(newStaff);
+    this.handleEdit();
     console.log("Edited staff: ", newStaff);
   }
   //
